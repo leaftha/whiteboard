@@ -1,4 +1,5 @@
 import { useSync } from "@tldraw/sync";
+import { useLocation } from "react-router-dom";
 import {
   AssetRecordType,
   getHashForString,
@@ -12,13 +13,16 @@ import "tldraw/tldraw.css";
 const WORKER_URL = `http://localhost:5858`;
 
 // In this example, the room ID is hard-coded. You can set this however you like though.
-const roomId = "test-room";
+// const roomId = "test-room";
 
 function WhiteBoard() {
+  let { state } = useLocation();
+  console.log(state);
+
   // Create a store connected to multiplayer.
   const store = useSync({
     // We need to know the websocket's URI...
-    uri: `${WORKER_URL}/connect/${roomId}`,
+    uri: `${WORKER_URL}/connect/${state.roomeId}`,
     // ...and how to handle static assets like images & videos
     assets: multiplayerAssets,
   });
