@@ -17,7 +17,6 @@ const WORKER_URL = `http://localhost:5858`;
 
 function WhiteBoard() {
   let { state } = useLocation();
-  console.log(state);
 
   // Create a store connected to multiplayer.
   const store = useSync({
