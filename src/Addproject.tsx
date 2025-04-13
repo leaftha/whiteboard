@@ -37,7 +37,7 @@ const AddProject = () => {
     try {
       const docRef = await addDoc(collection(db, "project"), {
         projectName: title,
-        roomeId: id,
+        roomId: id,
       });
     } catch (e) {
       console.error("Error adding document: ", e);
