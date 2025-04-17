@@ -1,7 +1,7 @@
 import cors from "@fastify/cors";
 import websocketPlugin from "@fastify/websocket";
 import fastify from "fastify";
-import { loadAsset, storeAsset } from "./assets";
+import { loadAsset, storeAsset, deleteAsset } from "./assets";
 import { makeOrLoadRoom } from "./rooms";
 import { unfurl } from "./unfurl";
 
@@ -10,8 +10,15 @@ const PORT = 5858;
 // For this example we use a simple fastify server with the official websocket plugin
 // To keep things simple we're skipping normal production concerns like rate limiting and input validation.
 const app = fastify();
+
+// ① CORS 플러그인 등록 (가장 먼저!)
+app.register(cors, {
+  origin: "http://localhost:3000", // 혹은 "*" (테스트용)
+  methods: ["GET", "PUT", "DELETE", "OPTIONS"], // DELETE 꼭 포함
+  allowedHeaders: ["Content-Type"], // 필요한 헤더들
+});
 app.register(websocketPlugin);
-app.register(cors, { origin: "*" });
+// app.register(cors, { origin: "*" });
 
 app.register(async (app) => {
   // This is the main entrypoint for the multiplayer sync
