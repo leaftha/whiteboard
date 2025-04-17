@@ -1,7 +1,7 @@
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { db } from "./firebase";
+import { db } from "../firebase";
 import { Link } from "react-router-dom";
 
 type ProjectType = {
