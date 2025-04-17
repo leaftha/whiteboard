@@ -1,11 +1,10 @@
-import React from "react";
-import "./App.css";
-import Router from "./Router";
+// src/App.tsx
+import React from 'react';
+import Router from './router/Router';
 
-const App = () => (
-  <>
-    <Router />
-  </>
-);
+function App() {
+  return <Router />;
+}
 
 export default App;
+export {}; // 타입스크립트가 모듈로 인식하게 함
