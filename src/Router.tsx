@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import WhiteBoard from "./Whiteboard";
-import Main from "./main";
-import Project from "./Project";
+import Main from "./components/main";
+import Project from "./components/Project";
 
 const Router = () => {
   return (
