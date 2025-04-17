@@ -1,7 +1,10 @@
+import AddProject from "./Addproject";
+
 const Main = () => {
   return (
     <div>
-      <h1>Mainb</h1>
+      <h1>Main</h1>
+      <AddProject />
     </div>
   );
 };
