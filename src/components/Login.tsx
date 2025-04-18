@@ -1,14 +1,13 @@
-// src/components/Login.tsx
 import React, { useState } from "react";
-
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 const Login = () => {
-  // 상태 관리: 이메일, 비밀번호
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [error, setError] = useState(""); // 에러 메시지 상태
 
-  // 입력값 변화 처리
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -16,11 +15,22 @@ const Login = () => {
     });
   };
 
-  // 로그인 폼 제출 처리
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("로그인 정보:", formData);
-    // 여기에 백엔드 전송 또는 로직 추가 가능 (예: 인증 API 호출)
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      const user = userCredential.user;
+      console.log("로그인 성공:", user);
+      // 여기서 리디렉션 등 추가 가능 (예: window.location.href = "/home")
+    } catch (error: any) {
+      setError(error.message);
+      console.error("로그인 실패:", error.code, error.message);
+    }
   };
 
   return (
@@ -44,9 +54,9 @@ const Login = () => {
           style={{ display: "block", marginBottom: "1rem", width: "100%" }}
         />
         <button type="submit">로그인</button>
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
 
-      {/* 회원가입 페이지로 이동하는 링크 */}
       <p style={{ marginTop: "1rem", textAlign: "center" }}>
         아직 계정이 없으신가요? <a href="/signup">회원가입</a>
       </p>

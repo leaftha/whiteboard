@@ -3,6 +3,7 @@ import WhiteBoard from "./components/whiteboard";
 import Main from "./components/main";
 import Project from "./components/Project";
 import Login from "./components/Login";
+import SignUp from "./components/signup";
 
 const Router = () => {
   return (
@@ -12,6 +13,7 @@ const Router = () => {
         <Route path="/project/:id" element={<Project />} />
         <Route path="/whiteboard" element={<WhiteBoard />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </BrowserRouter>
   );
