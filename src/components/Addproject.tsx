@@ -1,8 +1,16 @@
-import { collection, doc, addDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  addDoc,
+  getDocs,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import { v4 as uuid } from "uuid";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 // todo
 // 프로젝트 컴포넌트
@@ -11,6 +19,8 @@ import { Link } from "react-router-dom";
 // 초대 기능
 
 const AddProject = () => {
+  const { currentUser, loading } = useAuth();
+
   // const [prjList, setPrjList] = useState<{ id: string; roomeId?: string }[]>(
   //   []
   // );
@@ -37,7 +47,15 @@ const AddProject = () => {
       const docRef = await addDoc(collection(db, "project"), {
         projectName: title,
         roomId: id,
+        users: arrayUnion(currentUser?.uid),
       });
+
+      if (currentUser?.uid) {
+        const userRef = doc(db, "users", currentUser.uid);
+        await updateDoc(userRef, {
+          projects: arrayUnion(docRef.id),
+        });
+      }
     } catch (e) {
       console.error("Error adding document: ", e);
     }
