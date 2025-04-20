@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../firebase";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +22,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const auth = getAuth();
+    // const auth = getAuth();
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -30,7 +32,12 @@ const SignUp = () => {
       );
       const user = userCredential.user;
       console.log("회원가입 성공:", user);
-      // 추가로 사용자 이름 저장하고 싶다면 Firestore 또는 Realtime Database 사용
+      await setDoc(doc(db, "users", formData.email), {
+        uid: user.uid,
+        email: formData.email,
+        name: formData.username,
+        createdAt: new Date(),
+      });
     } catch (error: any) {
       setError(error.message);
       console.error("회원가입 실패:", error.code, error.message);
