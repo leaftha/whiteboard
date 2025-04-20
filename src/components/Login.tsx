@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { useAuth } from "../context/AuthContext";
 const Login = () => {
+  const { currentUser, loading } = useAuth();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -32,6 +35,8 @@ const Login = () => {
       console.error("로그인 실패:", error.code, error.message);
     }
   };
+
+  console.log(currentUser, loading);
 
   return (
     <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto" }}>
