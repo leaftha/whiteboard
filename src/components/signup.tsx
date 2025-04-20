@@ -32,7 +32,7 @@ const SignUp = () => {
       );
       const user = userCredential.user;
       console.log("회원가입 성공:", user);
-      await setDoc(doc(db, "users", formData.email), {
+      await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         email: formData.email,
         name: formData.username,
