@@ -26,7 +26,7 @@ const Login = () => {
       );
       const user = userCredential.user;
       console.log("로그인 성공:", user);
-      // 여기서 리디렉션 등 추가 가능 (예: window.location.href = "/home")
+      window.location.href = "/";
     } catch (error: any) {
       setError(error.message);
       console.error("로그인 실패:", error.code, error.message);
