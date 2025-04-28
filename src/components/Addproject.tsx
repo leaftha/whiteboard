@@ -10,12 +10,6 @@ import { v4 as uuid } from "uuid";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
-// todo
-// 프로젝트 컴포넌트
-// 로그인 기능 후
-// 유저에 따라 커서 색 다르게
-// 초대 기능
-
 const AddProject = () => {
   const [title, setTitle] = useState<string>("");
   const { currentUser, loading } = useAuth();
