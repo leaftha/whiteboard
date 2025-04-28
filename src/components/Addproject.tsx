@@ -2,14 +2,12 @@ import {
   collection,
   doc,
   addDoc,
-  getDocs,
   updateDoc,
   arrayUnion,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { v4 as uuid } from "uuid";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 // todo
@@ -19,27 +17,8 @@ import { useAuth } from "../context/AuthContext";
 // 초대 기능
 
 const AddProject = () => {
-  const { currentUser, loading } = useAuth();
-
-  // const [prjList, setPrjList] = useState<{ id: string; roomeId?: string }[]>(
-  //   []
-  // );
   const [title, setTitle] = useState<string>("");
-
-  // useEffect(() => {
-  //   const ReadprjList = async () => {
-  //     const prjListRef = collection(db, "users", "vltpcks", "projectList");
-  //     const querySnapshot = await getDocs(prjListRef);
-
-  //     const list = querySnapshot.docs.map((doc) => ({
-  //       id: doc.id,
-  //       ...doc.data(),
-  //     }));
-  //     setPrjList(list);
-  //   };
-
-  //   ReadprjList();
-  // }, []);
+  const { currentUser, loading } = useAuth();
 
   const newProject = async () => {
     const id = uuid();
