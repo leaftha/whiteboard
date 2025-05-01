@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-const WhiteBoard = () => {
+const Whiteboard: React.FC = () => {
   return (
     <div>
-      <h1>화이트보드</h1>
-      <p>여기서 협업이 진행됩니다.</p>
+      <h1>Whiteboard</h1>
+      {/* 화이트보드 기능 추가 */}
     </div>
   );
 };
 
-export default WhiteBoard;
+export default Whiteboard;
