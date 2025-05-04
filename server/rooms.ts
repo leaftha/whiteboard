@@ -5,7 +5,7 @@ import * as admin from "firebase-admin";
 if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(
-      require("../whiteboard-374db-firebase-adminsdk-fbsvc-23f6a889a3.json")
+      require("../whiteboard-374db-firebase-adminsdk-fbsvc-33d66f4d2c.json")
     ),
     storageBucket: "whiteboard-374db.firebasestorage.app",
   });
