@@ -1,66 +1,95 @@
+import "dotenv/config";
+import fastify from "fastify";
 import cors from "@fastify/cors";
 import websocketPlugin from "@fastify/websocket";
-import fastify from "fastify";
-import { loadAsset, storeAsset, deleteAsset } from "./assets";
+import { AccessToken, WebhookReceiver } from "livekit-server-sdk";
+
 import { makeOrLoadRoom } from "./rooms";
+import { loadAsset, storeAsset } from "./assets";
 import { unfurl } from "./unfurl";
 
-const PORT = 5858;
+const SERVER_PORT = process.env.SERVER_PORT || 6080;
+const LIVEKIT_API_KEY = process.env.LIVEKIT_API_KEY || "devkey";
+const LIVEKIT_API_SECRET = process.env.LIVEKIT_API_SECRET || "secret";
 
-// For this example we use a simple fastify server with the official websocket plugin
-// To keep things simple we're skipping normal production concerns like rate limiting and input validation.
 const app = fastify();
 
-// ① CORS 플러그인 등록 (가장 먼저!)
 app.register(cors, {
-  origin: "http://localhost:3000", // 혹은 "*" (테스트용)
-  methods: ["GET", "PUT", "DELETE", "OPTIONS"], // DELETE 꼭 포함
-  allowedHeaders: ["Content-Type"], // 필요한 헤더들
+  origin: "http://localhost:3000",
+  methods: ["GET", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
 });
 app.register(websocketPlugin);
-// app.register(cors, { origin: "*" });
 
-app.register(async (app) => {
-  // This is the main entrypoint for the multiplayer sync
-  app.get("/connect/:roomId", { websocket: true }, async (socket, req) => {
-    // The roomId comes from the URL pathname
-    const roomId = (req.params as any).roomId as string;
-    // The sessionId is passed from the client as a query param,
-    // you need to extract it and pass it to the room.
-    const sessionId = (req.query as any)?.["sessionId"] as string;
+// LiveKit 토큰 발급 API
+app.post("/token", async (req, res) => {
+  const { roomName, participantName } = req.body as any;
 
-    // Here we make or get an existing instance of TLSocketRoom for the given roomId
-    const room = await makeOrLoadRoom(roomId);
-    // and finally connect the socket to the room
-    room.handleSocketConnect({ sessionId, socket });
-  });
+  if (!roomName || !participantName) {
+    return res
+      .status(400)
+      .send({ errorMessage: "roomName and participantName are required" });
+  }
 
-  // To enable blob storage for assets, we add a simple endpoint supporting PUT and GET requests
-  // But first we need to allow all content types with no parsing, so we can handle raw data
-  app.addContentTypeParser("*", (_, __, done) => done(null));
-  app.put("/uploads/:id", {}, async (req, res) => {
-    const id = (req.params as any).id as string;
-    await storeAsset(id, req.raw);
-    res.send({ ok: true });
+  const at = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET, {
+    identity: participantName,
   });
-  app.get("/uploads/:id", async (req, res) => {
-    const id = (req.params as any).id as string;
-    const data = await loadAsset(id);
-    res.send(data);
-  });
+  at.addGrant({ roomJoin: true, room: roomName });
+  const token = await at.toJwt();
 
-  // To enable unfurling of bookmarks, we add a simple endpoint that takes a URL query param
-  app.get("/unfurl", async (req, res) => {
-    const url = (req.query as any).url as string;
-    res.send(await unfurl(url));
-  });
+  res.send({ token });
 });
 
-app.listen({ port: PORT }, (err) => {
+// LiveKit Webhook 수신
+const webhookReceiver = new WebhookReceiver(
+  LIVEKIT_API_KEY,
+  LIVEKIT_API_SECRET
+);
+app.post("/livekit/webhook", async (req, res) => {
+  try {
+    const event = await webhookReceiver.receive(
+      String(req.body),
+      req.headers["authorization"] as string
+    );
+    console.log(event);
+  } catch (error) {
+    console.error("Error validating webhook event", error);
+  }
+  res.status(200).send();
+});
+
+// WebSocket 연결
+app.get("/connect/:roomId", { websocket: true }, async (socket, req) => {
+  const roomId = (req.params as any).roomId;
+  const sessionId = (req.query as any)?.["sessionId"];
+
+  const room = await makeOrLoadRoom(roomId);
+  room.handleSocketConnect({ sessionId, socket });
+});
+
+// 업로드 기능
+app.addContentTypeParser("*", (_, __, done) => done(null));
+app.put("/uploads/:id", async (req, res) => {
+  const id = (req.params as any).id;
+  await storeAsset(id, req.raw);
+  res.send({ ok: true });
+});
+app.get("/uploads/:id", async (req, res) => {
+  const id = (req.params as any).id;
+  const data = await loadAsset(id);
+  res.send(data);
+});
+
+// unfurl 기능
+app.get("/unfurl", async (req, res) => {
+  const url = (req.query as any).url;
+  res.send(await unfurl(url));
+});
+
+app.listen({ port: Number(SERVER_PORT) }, (err) => {
   if (err) {
     console.error(err);
     process.exit(1);
   }
-
-  console.log(`Server started on port ${PORT}`);
+  console.log(`Unified server started on port ${SERVER_PORT}`);
 });

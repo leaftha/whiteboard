@@ -9,6 +9,7 @@ import {
   uniqueId,
 } from "tldraw";
 import "tldraw/tldraw.css";
+// import VoiceCall from "./voiceCall";
 
 const WORKER_URL = `http://localhost:5858`;
 
@@ -31,6 +32,7 @@ function WhiteBoard() {
           editor.registerExternalAssetHandler("url", unfurlBookmarkUrl);
         }}
       />
+      {/* <VoiceCall /> */}
     </div>
   );
 }

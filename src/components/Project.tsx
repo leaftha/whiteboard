@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
+import VideoCall from "./VideoCall";
 
 type ProjectType = {
   id: string;
@@ -20,7 +21,11 @@ type ProjectType = {
 };
 
 const Project = () => {
-  const [prj, setPrj] = useState<ProjectType | null>(null);
+  const [prj, setPrj] = useState<ProjectType>({
+    id: "",
+    roomId: "",
+    projectName: "",
+  });
   const [name, setName] = useState<string>("");
   let { id } = useParams();
 
@@ -87,9 +92,11 @@ const Project = () => {
           초대
         </button>
       </div>
-      <Link to="/whiteboard" state={{ roomeId: prj?.roomId }}>
+      <Link to="/whiteboard" state={{ roomeId: prj.roomId }}>
         화이트 보드
       </Link>
+
+      <VideoCall />
     </div>
   );
 };
