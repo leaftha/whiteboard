@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
-import VideoCall from "./VideoCall";
 
 type ProjectType = {
   id: string;
@@ -95,8 +94,6 @@ const Project = () => {
       <Link to="/whiteboard" state={{ roomeId: prj.roomId }}>
         화이트 보드
       </Link>
-
-      <VideoCall />
     </div>
   );
 };
