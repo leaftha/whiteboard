@@ -20,70 +20,71 @@ app.register(cors, {
   allowedHeaders: ["Content-Type"],
 });
 app.register(websocketPlugin);
+app.register(async (app) => {
+  // LiveKit 토큰 발급 API
+  app.post("/token", async (req, res) => {
+    const { roomName, participantName } = req.body as any;
 
-// LiveKit 토큰 발급 API
-app.post("/token", async (req, res) => {
-  const { roomName, participantName } = req.body as any;
+    if (!roomName || !participantName) {
+      return res
+        .status(400)
+        .send({ errorMessage: "roomName and participantName are required" });
+    }
 
-  if (!roomName || !participantName) {
-    return res
-      .status(400)
-      .send({ errorMessage: "roomName and participantName are required" });
-  }
+    const at = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET, {
+      identity: participantName,
+    });
+    at.addGrant({ roomJoin: true, room: roomName });
+    const token = await at.toJwt();
 
-  const at = new AccessToken(LIVEKIT_API_KEY, LIVEKIT_API_SECRET, {
-    identity: participantName,
+    res.send({ token });
   });
-  at.addGrant({ roomJoin: true, room: roomName });
-  const token = await at.toJwt();
 
-  res.send({ token });
-});
+  // LiveKit Webhook 수신
+  const webhookReceiver = new WebhookReceiver(
+    LIVEKIT_API_KEY,
+    LIVEKIT_API_SECRET
+  );
+  app.post("/livekit/webhook", async (req, res) => {
+    try {
+      const event = await webhookReceiver.receive(
+        String(req.body),
+        req.headers["authorization"] as string
+      );
+      console.log(event);
+    } catch (error) {
+      console.error("Error validating webhook event", error);
+    }
+    res.status(200).send();
+  });
 
-// LiveKit Webhook 수신
-const webhookReceiver = new WebhookReceiver(
-  LIVEKIT_API_KEY,
-  LIVEKIT_API_SECRET
-);
-app.post("/livekit/webhook", async (req, res) => {
-  try {
-    const event = await webhookReceiver.receive(
-      String(req.body),
-      req.headers["authorization"] as string
-    );
-    console.log(event);
-  } catch (error) {
-    console.error("Error validating webhook event", error);
-  }
-  res.status(200).send();
-});
+  // WebSocket 연결
+  app.get("/connect/:roomId", { websocket: true }, async (socket, req) => {
+    const roomId = (req.params as any).roomId;
+    const sessionId = (req.query as any)?.["sessionId"];
 
-// WebSocket 연결
-app.get("/connect/:roomId", { websocket: true }, async (socket, req) => {
-  const roomId = (req.params as any).roomId;
-  const sessionId = (req.query as any)?.["sessionId"];
+    const room = await makeOrLoadRoom(roomId);
+    room.handleSocketConnect({ sessionId, socket });
+  });
 
-  const room = await makeOrLoadRoom(roomId);
-  room.handleSocketConnect({ sessionId, socket });
-});
+  // 업로드 기능
+  app.addContentTypeParser("*", (_, __, done) => done(null));
+  app.put("/uploads/:id", async (req, res) => {
+    const id = (req.params as any).id;
+    await storeAsset(id, req.raw);
+    res.send({ ok: true });
+  });
+  app.get("/uploads/:id", async (req, res) => {
+    const id = (req.params as any).id;
+    const data = await loadAsset(id);
+    res.send(data);
+  });
 
-// 업로드 기능
-app.addContentTypeParser("*", (_, __, done) => done(null));
-app.put("/uploads/:id", async (req, res) => {
-  const id = (req.params as any).id;
-  await storeAsset(id, req.raw);
-  res.send({ ok: true });
-});
-app.get("/uploads/:id", async (req, res) => {
-  const id = (req.params as any).id;
-  const data = await loadAsset(id);
-  res.send(data);
-});
-
-// unfurl 기능
-app.get("/unfurl", async (req, res) => {
-  const url = (req.query as any).url;
-  res.send(await unfurl(url));
+  // unfurl 기능
+  app.get("/unfurl", async (req, res) => {
+    const url = (req.query as any).url;
+    res.send(await unfurl(url));
+  });
 });
 
 app.listen({ port: Number(SERVER_PORT) }, (err) => {

@@ -6,9 +6,10 @@ import {
   Room,
   RoomEvent,
 } from "livekit-client";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // useEffect import 추가
 import VideoComponent from "./VideoComponent";
 import AudioComponent from "./AudioComponent";
+import { useAuth } from "../context/AuthContext";
 
 type TrackInfo = {
   trackPublication: RemoteTrackPublication;
@@ -41,20 +42,20 @@ function configureUrls() {
   }
 }
 
-function VideoCall() {
+function VideoCall({ roomId }: { roomId: string }) {
   const [room, setRoom] = useState<Room | undefined>(undefined);
   const [localTrack, setLocalTrack] = useState<LocalVideoTrack | undefined>(
     undefined
   );
   const [remoteTracks, setRemoteTracks] = useState<TrackInfo[]>([]);
-
-  const [participantName, setParticipantName] = useState(
-    "Participant" + Math.floor(Math.random() * 100)
-  );
-  const [roomName, setRoomName] = useState("Test Room");
+  const { currentUser, loading } = useAuth();
+  useEffect(() => {
+    if (!loading && currentUser) {
+      joinRoom();
+    }
+  }, [loading, currentUser, roomId]);
 
   async function joinRoom() {
-    // Initialize a new Room object
     const room = new Room();
     setRoom(room);
 
@@ -91,7 +92,7 @@ function VideoCall() {
 
     try {
       // Get a token from your application server with the room name and participant name
-      const token = await getToken(roomName, participantName);
+      const token = await getToken(roomId, String(currentUser?.email));
 
       // Connect to the room with the LiveKit URL and the token
       await room.connect(LIVEKIT_URL, token);
@@ -157,85 +158,48 @@ function VideoCall() {
 
   return (
     <>
-      {!room ? (
-        <div id="join">
-          <div id="join-dialog">
-            <h2>Join a Video Room</h2>
-            <form
-              onSubmit={(e) => {
-                joinRoom();
-                e.preventDefault();
-              }}
-            >
-              <div>
-                <label htmlFor="participant-name">Participant</label>
-                <input
-                  id="participant-name"
-                  className="form-control"
-                  type="text"
-                  value={participantName}
-                  onChange={(e) => setParticipantName(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="room-name">Room</label>
-                <input
-                  id="room-name"
-                  className="form-control"
-                  type="text"
-                  value={roomName}
-                  onChange={(e) => setRoomName(e.target.value)}
-                  required
-                />
-              </div>
-              <button
-                className="btn btn-lg btn-success"
-                type="submit"
-                disabled={!roomName || !participantName}
-              >
-                Join!
-              </button>
-            </form>
-          </div>
+      <div id="room" style={{ zIndex: 100, top: 0, position: "absolute" }}>
+        <div id="room-header">
+          <h2 id="room-title">{roomId}</h2>
+          <button
+            className="btn btn-danger"
+            id="leave-room-button"
+            onClick={joinRoom}
+          >
+            Join Room
+          </button>
+          <button
+            className="btn btn-danger"
+            id="leave-room-button"
+            onClick={leaveRoom}
+          >
+            Leave Room
+          </button>
         </div>
-      ) : (
-        <div id="room">
-          <div id="room-header">
-            <h2 id="room-title">{roomName}</h2>
-            <button
-              className="btn btn-danger"
-              id="leave-room-button"
-              onClick={leaveRoom}
-            >
-              Leave Room
-            </button>
-          </div>
-          <div id="layout-container">
-            {localTrack && (
+        <div id="layout-container">
+          {localTrack && (
+            <VideoComponent
+              track={localTrack}
+              participantIdentity={String(currentUser?.email)}
+              local={true}
+            />
+          )}
+          {remoteTracks.map((remoteTrack) =>
+            remoteTrack.trackPublication.kind === "video" ? (
               <VideoComponent
-                track={localTrack}
-                participantIdentity={participantName}
-                local={true}
+                key={remoteTrack.trackPublication.trackSid}
+                track={remoteTrack.trackPublication.videoTrack!}
+                participantIdentity={remoteTrack.participantIdentity}
               />
-            )}
-            {remoteTracks.map((remoteTrack) =>
-              remoteTrack.trackPublication.kind === "video" ? (
-                <VideoComponent
-                  key={remoteTrack.trackPublication.trackSid}
-                  track={remoteTrack.trackPublication.videoTrack!}
-                  participantIdentity={remoteTrack.participantIdentity}
-                />
-              ) : (
-                <AudioComponent
-                  key={remoteTrack.trackPublication.trackSid}
-                  track={remoteTrack.trackPublication.audioTrack!}
-                />
-              )
-            )}
-          </div>
+            ) : (
+              <AudioComponent
+                key={remoteTrack.trackPublication.trackSid}
+                track={remoteTrack.trackPublication.audioTrack!}
+              />
+            )
+          )}
         </div>
-      )}
+      </div>
     </>
   );
 }

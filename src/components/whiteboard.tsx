@@ -9,9 +9,9 @@ import {
   uniqueId,
 } from "tldraw";
 import "tldraw/tldraw.css";
-// import VoiceCall from "./voiceCall";
+import VideoCall from "./VideoCall";
 
-const WORKER_URL = `http://localhost:5858`;
+const WORKER_URL = `http://localhost:6080`;
 
 function WhiteBoard() {
   let { state } = useLocation();
@@ -20,7 +20,6 @@ function WhiteBoard() {
     uri: `${WORKER_URL}/connect/${state.roomeId}`,
     assets: multiplayerAssets,
   });
-
   return (
     <div style={{ position: "fixed", inset: 0 }}>
       <Tldraw
@@ -32,7 +31,7 @@ function WhiteBoard() {
           editor.registerExternalAssetHandler("url", unfurlBookmarkUrl);
         }}
       />
-      {/* <VoiceCall /> */}
+      <VideoCall roomId={state.roomeId} />
     </div>
   );
 }
