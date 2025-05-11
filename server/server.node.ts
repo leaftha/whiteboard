@@ -53,7 +53,7 @@ app.register(async (app) => {
       );
       console.log(event);
     } catch (error) {
-      console.error("Error validating webhook event", error);
+      // console.error("Error validating webhook event", error);
     }
     res.status(200).send();
   });

@@ -1,0 +1,7 @@
+.main {
+  z-index: 100;
+  position: absolute;
+  top: 10%;
+  height: 80%;
+  width: 10%;
+}
