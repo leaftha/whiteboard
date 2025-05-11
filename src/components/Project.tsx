@@ -49,24 +49,26 @@ const Project = () => {
 
     loadPrj();
   }, [id]);
-
   const invite = async (email: string) => {
     try {
+      if (!id) return;
       const usersRef = collection(db, "users");
       const q = query(usersRef, where("email", "==", email));
       const querySnapshot = await getDocs(q);
 
-      if (!querySnapshot.empty) {
-        for (const userDoc of querySnapshot.docs) {
-          console.log("찾은 유저:", userDoc.id, userDoc.data());
-
-          const userRef = doc(db, "users", userDoc.id);
-          await updateDoc(userRef, {
-            projects: arrayUnion(id),
-          });
-        }
-      } else {
+      if (querySnapshot.empty) {
         console.log("해당 이메일을 가진 유저가 없습니다.");
+        return;
+      }
+      const prjDocRef = doc(db, "projects", id);
+      for (const userDoc of querySnapshot.docs) {
+        const userRef = doc(db, "users", userDoc.id);
+        await updateDoc(userRef, {
+          projects: arrayUnion(id),
+        });
+        await updateDoc(prjDocRef, {
+          users: arrayUnion(userDoc.id),
+        });
       }
     } catch (error) {
       console.error("유저를 찾는 중 에러:", error);
