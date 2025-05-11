@@ -10,7 +10,7 @@ import { useState, useEffect } from "react"; // useEffect import 추가
 import VideoComponent from "./VideoComponent";
 import AudioComponent from "./AudioComponent";
 import { useAuth } from "../context/AuthContext";
-
+import style from "./VideoCall.module.css";
 type TrackInfo = {
   trackPublication: RemoteTrackPublication;
   participantIdentity: string;
@@ -158,25 +158,11 @@ function VideoCall({ roomId }: { roomId: string }) {
 
   return (
     <>
-      <div id="room" style={{ zIndex: 100, top: 0, position: "absolute" }}>
-        <div id="room-header">
-          <h2 id="room-title">{roomId}</h2>
-          <button
-            className="btn btn-danger"
-            id="leave-room-button"
-            onClick={joinRoom}
-          >
-            Join Room
-          </button>
-          <button
-            className="btn btn-danger"
-            id="leave-room-button"
-            onClick={leaveRoom}
-          >
-            Leave Room
-          </button>
+      <div className={style.main}>
+        <div>
+          <button>Mute</button>
         </div>
-        <div id="layout-container">
+        <div>
           {localTrack && (
             <VideoComponent
               track={localTrack}
