@@ -48,7 +48,9 @@ function VideoCall({ roomId }: { roomId: string }) {
     undefined
   );
   const [remoteTracks, setRemoteTracks] = useState<TrackInfo[]>([]);
+  const [isMute, setIsMute] = useState(false);
   const { currentUser, loading } = useAuth();
+
   useEffect(() => {
     if (!loading && currentUser) {
       joinRoom();
@@ -156,11 +158,21 @@ function VideoCall({ roomId }: { roomId: string }) {
     return data.token;
   }
 
+  async function Mute() {
+    if (isMute) {
+      await room?.localParticipant.setMicrophoneEnabled(false);
+      setIsMute(false);
+    } else {
+      setIsMute(true);
+      await room?.localParticipant.setMicrophoneEnabled(true);
+    }
+  }
+
   return (
     <>
       <div className={style.main}>
         <div>
-          <button>Mute</button>
+          <button onClick={Mute}>Mute</button>
         </div>
         <div>
           {localTrack && (

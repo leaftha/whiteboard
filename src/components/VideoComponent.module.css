@@ -16,7 +16,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1.5);
-  z-index: 1000; /* 위로 올라오게 */
+  z-index: 1000;
 }
 
 .videoContainer.participantData {
