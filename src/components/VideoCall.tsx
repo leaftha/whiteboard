@@ -49,6 +49,7 @@ function VideoCall({ roomId }: { roomId: string }) {
   );
   const [remoteTracks, setRemoteTracks] = useState<TrackInfo[]>([]);
   const [isMute, setIsMute] = useState(false);
+  const [isVideo, setIsVideo] = useState(false);
   const { currentUser, loading } = useAuth();
 
   useEffect(() => {
@@ -168,11 +169,26 @@ function VideoCall({ roomId }: { roomId: string }) {
     }
   }
 
+  async function VideoHide() {
+    if (isVideo) {
+      await room?.localParticipant.setCameraEnabled(false);
+      setIsVideo(false);
+    } else {
+      setIsVideo(true);
+      await room?.localParticipant.setCameraEnabled(true);
+    }
+  }
+  console.log(isMute);
   return (
     <>
       <div className={style.main}>
-        <div>
-          <button onClick={Mute}>Mute</button>
+        <div className={style.btns}>
+          <button onClick={Mute} className={style.btn}>
+            Mute
+          </button>
+          <button onClick={VideoHide} className={style.btn}>
+            {isVideo ? "Off" : "On"}
+          </button>
         </div>
         <div>
           {localTrack && (
