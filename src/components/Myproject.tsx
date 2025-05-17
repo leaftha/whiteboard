@@ -5,14 +5,21 @@ import { db } from "../firebase";
 import { Link } from "react-router-dom";
 import AddProject from "./Addproject";
 
+type Project = {
+  id: string;
+  roomId: string;
+  projectName: string;
+  users: string[];
+};
+
 const MyProject = () => {
-  const [projects, setProjects] = useState<any[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isModal, setIsMadal] = useState(false);
   const { currentUser, loading } = useAuth();
 
   useEffect(() => {
     const fetchProjects = async () => {
-      if (loading) return;
-      if (!currentUser) return;
+      if (loading || !currentUser) return;
 
       try {
         const userDocRef = doc(db, "users", currentUser.uid);
@@ -25,15 +32,21 @@ const MyProject = () => {
           const projectPromises = projectIds.map(async (projectId) => {
             const projectDocRef = doc(db, "project", projectId);
             const projectDocSnap = await getDoc(projectDocRef);
-            console.log(projectId, projectDocSnap.data());
-            return projectDocSnap.exists()
-              ? { id: projectDocSnap.id, ...projectDocSnap.data() }
-              : null;
+            if (projectDocSnap.exists()) {
+              const data = projectDocSnap.data();
+              return {
+                id: projectDocSnap.id,
+                roomId: data.roomId,
+                projectName: data.projectName,
+                users: data.users,
+              } as Project;
+            }
+            return null;
           });
 
           const projectDataList = await Promise.all(projectPromises);
           const filteredProjects = projectDataList.filter(
-            (project) => project !== null
+            (project): project is Project => project !== null
           );
           setProjects(filteredProjects);
         }
@@ -47,8 +60,14 @@ const MyProject = () => {
 
   return (
     <div>
-      <AddProject />
       <h1>내 프로젝트</h1>
+      <button
+        onClick={() => {
+          setIsMadal(!isModal);
+        }}
+      >
+        새 프로젝트
+      </button>
       <ul>
         {projects.map((project) => (
           <Link to={`./project/${project.id}`} key={project.id}>
@@ -56,6 +75,8 @@ const MyProject = () => {
           </Link>
         ))}
       </ul>
+
+      {isModal && <AddProject />}
     </div>
   );
 };
