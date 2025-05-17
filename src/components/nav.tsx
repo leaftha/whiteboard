@@ -17,7 +17,15 @@ const Nav = () => {
       <div className={style.title}>
         <h1>WhiteBoard</h1>
       </div>
+
       <div className={style.menu}>
+        {currentUser === null || (
+          <Link to="/projects" className={style.project}>
+            Project
+          </Link>
+        )}
+      </div>
+      <div className={style.LogMenu}>
         {currentUser === null ? (
           <Link to="/login" className={style.link}>
             Login

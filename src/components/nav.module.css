@@ -4,6 +4,8 @@
   justify-content: space-between;
   width: 100%;
   padding: 20px 0;
+  position: relative;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .title {
@@ -12,15 +14,49 @@
 }
 
 .menu {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 25px;
+}
+
+.project {
+  cursor: pointer;
+  color: #111111;
+  text-decoration: none;
+}
+
+.LogMenu {
   display: flex;
   margin-right: 20px;
   font-size: 25px;
 }
-.menu h1 {
+
+.LogMenu h1 {
   cursor: pointer;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #111111;
+  transition: 0.5s ease-in-out;
 }
+
+.LogMenu h1:hover {
+  color: #ffffff;
+  background: #111111;
+}
+
 .link {
+  border: 1px solid #111111;
   cursor: pointer;
   color: #111111;
   text-decoration: none;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #111111;
+  transition: 0.5s ease-in-out;
+}
+
+.link h1:hover {
+  color: #ffffff;
+  background: #111111;
 }
