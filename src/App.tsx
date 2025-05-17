@@ -2,12 +2,17 @@
 import React from "react";
 import Router from "./Router";
 import { AuthProvider } from "./context/AuthContext";
+import Nav from "./components/nav";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-    <AuthProvider>
-      <Router />
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <Nav />
+        <Router />
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
