@@ -4,11 +4,13 @@ import Main from "./components/main";
 import Project from "./components/Project";
 import Login from "./components/Login";
 import SignUp from "./components/signup";
+import MyProject from "./components/Myproject";
 
 const Router = () => {
   return (
     <Routes>
       <Route path="/" element={<Main />} />
+      <Route path="/projects" element={<MyProject />} />
       <Route path="/project/:id" element={<Project />} />
       <Route path="/whiteboard" element={<WhiteBoard />} />
       <Route path="/login" element={<Login />} />
