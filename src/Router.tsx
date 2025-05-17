@@ -7,15 +7,13 @@ import SignUp from "./components/signup";
 
 const Router = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/project/:id" element={<Project />} />
-        <Route path="/whiteboard" element={<WhiteBoard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Main />} />
+      <Route path="/project/:id" element={<Project />} />
+      <Route path="/whiteboard" element={<WhiteBoard />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
+    </Routes>
   );
 };
 
