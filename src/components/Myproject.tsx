@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
+import AddProject from "./Addproject";
 
 const MyProject = () => {
   const [projects, setProjects] = useState<any[]>([]);
@@ -46,6 +47,7 @@ const MyProject = () => {
 
   return (
     <div>
+      <AddProject />
       <h1>내 프로젝트</h1>
       <ul>
         {projects.map((project) => (
