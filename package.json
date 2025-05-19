@@ -20,7 +20,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "clean": "rimraf ./build ./dist ./node_modules/.cache"
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +44,7 @@
   "devDependencies": {
     "@types/react": "^19.1.1",
     "@types/react-dom": "^19.1.2",
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "rimraf": "^5.0.0"
   }
 }

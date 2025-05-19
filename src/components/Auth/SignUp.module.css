@@ -33,19 +33,7 @@
   border-radius: 5px;
 }
 
-.button {
-  padding: 12px;
-  background-color: #4CAF50;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
 
-.button:hover {
-  background-color: #45a049;
-}
 
 .linkText {
   text-align: center;
