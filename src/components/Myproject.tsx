@@ -70,7 +70,7 @@ const MyProject = () => {
       </button>
       <ul>
         {projects.map((project) => (
-          <Link to={`./project/${project.id}`} key={project.id}>
+          <Link to={`/project/${project.id}`} key={project.id}>
             {project.projectName || "제목 없음"}
           </Link>
         ))}
