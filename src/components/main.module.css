@@ -34,7 +34,7 @@
   margin-top: 10px;
 }
 
-.login {
+.firstBtn {
   margin-right: 20px;
   text-decoration: none;
   color: #ffffff;
@@ -42,14 +42,15 @@
   padding: 20px;
   font-size: 20px;
   border-radius: 16px;
+  cursor: pointer;
   transition: 0.3s;
 }
 
-.login:hover {
+.firstBtn:hover {
   background: #4479bd;
 }
 
-.signup {
+.secondBtn {
   margin-right: 20px;
   text-decoration: none;
   color: #558bcf;
@@ -60,23 +61,8 @@
   transition: 0.3s;
 }
 
-.signup:hover {
+.secondBtn:hover {
   background: #d6eafd;
-}
-
-.logout {
-  text-decoration: none;
-  color: #ffffff;
-  background: #558bcf;
-  padding: 20px;
-  font-size: 20px;
-  border-radius: 16px;
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.logout:hover {
-  background: #4479bd;
 }
 
 .titleImg {
