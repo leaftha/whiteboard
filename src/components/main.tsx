@@ -27,18 +27,21 @@ const Main = () => {
               <>
                 {currentUser === null ? (
                   <>
-                    <Link className={style.login} to="/login">
+                    <Link className={style.firstBtn} to="/login">
                       로그인
                     </Link>
-                    <Link className={style.signup} to="/signup">
+                    <Link className={style.secondBtn} to="/signup">
                       회원가입
                     </Link>
                   </>
                 ) : (
                   <>
-                    <h1 onClick={onLogOut} className={style.logout}>
+                    <h1 onClick={onLogOut} className={style.firstBtn}>
                       로그아웃
                     </h1>
+                    <Link className={style.secondBtn} to="/projects">
+                      프로젝트들
+                    </Link>
                   </>
                 )}
               </>
