@@ -1,0 +1,70 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.titleComponent {
+  display: flex;
+  width: 70%;
+  margin: 0 auto;
+  align-items: center;
+  gap: 200px;
+  padding-top: 150px;
+}
+
+.titleDescription {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.titleWord {
+  font-size: 50px;
+  font-weight: bold;
+}
+.titleDescription p {
+  font-size: 20px;
+}
+
+.logComponent {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.login {
+  margin-right: 20px;
+  text-decoration: none;
+  color: #ffffff;
+  background: #558bcf;
+  padding: 20px;
+  font-size: 20px;
+  border-radius: 16px;
+  transition: 0.3s;
+}
+
+.login:hover {
+  background: #4479bd;
+}
+
+.signup {
+  margin-right: 20px;
+  text-decoration: none;
+  color: #558bcf;
+  background: #ebf5fe;
+  padding: 20px;
+  font-size: 20px;
+  border-radius: 16px;
+  transition: 0.3s;
+}
+
+.signup:hover {
+  background: #d6eafd;
+}
+
+.titleImg {
+  width: 50%;
+  border-radius: 10px;
+}
