@@ -93,9 +93,7 @@ const Project = () => {
           초대
         </button>
       </div>
-      <Link to="/whiteboard" state={{ roomeId: prj.roomId }}>
-        화이트 보드
-      </Link>
+      <Link to={`/whiteboard/${prj.roomId}`}>화이트 보드</Link>
     </div>
   );
 };

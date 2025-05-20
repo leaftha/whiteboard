@@ -1,5 +1,5 @@
 import { useSync } from "@tldraw/sync";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   AssetRecordType,
   getHashForString,
@@ -10,16 +10,37 @@ import {
 } from "tldraw";
 import "tldraw/tldraw.css";
 import VideoCall from "./VideoCall";
+import { useEffect, useState } from "react";
 
 const WORKER_URL = `http://localhost:6080`;
 
 function WhiteBoard() {
-  let { state } = useLocation();
+  const { roomId } = useParams();
 
   const store = useSync({
-    uri: `${WORKER_URL}/connect/${state.roomeId}`,
+    uri: `${WORKER_URL}/connect/${roomId}`,
     assets: multiplayerAssets,
   });
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
+
+    if (store.status === "synced-remote") {
+      if (timer) clearTimeout(timer);
+    } else if (store.status === "loading") {
+      timer = setTimeout(() => {
+        console.log("재연결 시도 중...");
+        window.location.reload();
+      }, 5000);
+    } else {
+      if (timer) clearTimeout(timer);
+    }
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [store.status]);
+
   return (
     <div style={{ position: "fixed", inset: 0 }}>
       <Tldraw
@@ -31,7 +52,7 @@ function WhiteBoard() {
           editor.registerExternalAssetHandler("url", unfurlBookmarkUrl);
         }}
       />
-      <VideoCall roomId={state.roomeId} />
+      <VideoCall roomId={roomId as string} />
     </div>
   );
 }

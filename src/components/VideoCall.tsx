@@ -178,7 +178,6 @@ function VideoCall({ roomId }: { roomId: string }) {
       await room?.localParticipant.setCameraEnabled(true);
     }
   }
-  console.log(isMute);
   return (
     <>
       <div className={style.main}>

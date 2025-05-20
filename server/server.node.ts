@@ -63,8 +63,14 @@ app.register(async (app) => {
     const roomId = (req.params as any).roomId;
     const sessionId = (req.query as any)?.["sessionId"];
 
-    const room = await makeOrLoadRoom(roomId);
-    room.handleSocketConnect({ sessionId, socket });
+    try {
+      const room = await makeOrLoadRoom(roomId);
+      console.log("Room loaded:", roomId);
+      room.handleSocketConnect({ sessionId, socket });
+      console.log("handleSocketConnect finished");
+    } catch (e) {
+      console.error("Error in handleSocketConnect:", e);
+    }
   });
 
   // 업로드 기능
