@@ -64,6 +64,21 @@
   background: #d6eafd;
 }
 
+.logout {
+  text-decoration: none;
+  color: #ffffff;
+  background: #558bcf;
+  padding: 20px;
+  font-size: 20px;
+  border-radius: 16px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.logout:hover {
+  background: #4479bd;
+}
+
 .titleImg {
   width: 50%;
   border-radius: 10px;
