@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
-import style from "./main.module.css";
+import style from "../style/main.module.css";
 import { useAuth } from "../context/AuthContext";
 import { auth } from "../firebase";
+import IntroduceTitle from "./introduceTitle";
 
 const Main = () => {
   const { currentUser, loading } = useAuth();
@@ -11,7 +12,6 @@ const Main = () => {
     auth.signOut();
     navigate("/");
   };
-  console.log(currentUser);
   return (
     <div className={style.main}>
       <div className={style.titleComponent}>
@@ -51,8 +51,112 @@ const Main = () => {
         <img className={style.titleImg} src="image/main1.jpg" alt="main img" />
       </div>
 
-      <div>
-        <h1>설명</h1>
+      <IntroduceTitle />
+
+      <div className={style.descriptionContainer}>
+        <div className={style.descriptionBody}>
+          <article className={style.descriptionGridItem}>
+            <div>
+              <h1>title</h1>
+            </div>
+            <div>
+              <img
+                className={style.titleImg}
+                src="image/main1.jpg"
+                alt="main img"
+              />
+            </div>
+            <div>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
+                illum explicabo odio aliquam consequatur, doloremque, vitae quas
+                est voluptates dignissimos quaerat ut commodi in. Architecto
+                atque quam quo molestiae provident?
+              </p>
+            </div>
+          </article>
+
+          <article className={style.descriptionGridItem}>
+            <div>
+              <h1>title</h1>
+            </div>
+            <div>
+              <img
+                className={style.titleImg}
+                src="image/main1.jpg"
+                alt="main img"
+              />
+            </div>
+            <div>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
+                illum explicabo odio aliquam consequatur, doloremque, vitae quas
+                est voluptates dignissimos quaerat ut commodi in. Architecto
+                atque quam quo molestiae provident?
+              </p>
+            </div>
+          </article>
+          <article className={style.descriptionGridItemColumn}>
+            <div>
+              <h1>title</h1>
+            </div>
+            <div>
+              {/* <img
+                className={style.titleImg}
+                src="image/main1.jpg"
+                alt="main img"
+              /> */}
+            </div>
+            <div>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
+                illum explicabo odio aliquam consequatur, doloremque, vitae quas
+                est voluptates dignissimos quaerat ut commodi in. Architecto
+                atque quam quo molestiae provident?
+              </p>
+            </div>
+          </article>
+          <article className={style.descriptionGridItem}>
+            <div>
+              <h1>title</h1>
+            </div>
+            <div>
+              <img
+                className={style.titleImg}
+                src="image/main1.jpg"
+                alt="main img"
+              />
+            </div>
+            <div>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
+                illum explicabo odio aliquam consequatur, doloremque, vitae quas
+                est voluptates dignissimos quaerat ut commodi in. Architecto
+                atque quam quo molestiae provident?
+              </p>
+            </div>
+          </article>
+          <article className={style.descriptionGridItem}>
+            <div>
+              <h1>title</h1>
+            </div>
+            <div>
+              <img
+                className={style.titleImg}
+                src="image/main1.jpg"
+                alt="main img"
+              />
+            </div>
+            <div>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
+                illum explicabo odio aliquam consequatur, doloremque, vitae quas
+                est voluptates dignissimos quaerat ut commodi in. Architecto
+                atque quam quo molestiae provident?
+              </p>
+            </div>
+          </article>
+        </div>
       </div>
     </div>
   );
