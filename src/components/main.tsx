@@ -3,7 +3,7 @@ import style from "../style/main.module.css";
 import { useAuth } from "../context/AuthContext";
 import { auth } from "../firebase";
 import IntroduceTitle from "./introduceTitle";
-
+import Footer from "./footer";
 const Main = () => {
   const { currentUser, loading } = useAuth();
   const navigate = useNavigate();
@@ -158,6 +158,7 @@ const Main = () => {
           </article>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
