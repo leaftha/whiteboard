@@ -10,7 +10,7 @@ import { useState, useEffect } from "react"; // useEffect import 추가
 import VideoComponent from "./VideoComponent";
 import AudioComponent from "./AudioComponent";
 import { useAuth } from "../context/AuthContext";
-import style from "./VideoCall.module.css";
+import style from "../style/VideoCall.module.css";
 type TrackInfo = {
   trackPublication: RemoteTrackPublication;
   participantIdentity: string;

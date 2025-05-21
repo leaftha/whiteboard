@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import style from "./Login.module.css";
+import style from "../style/Login.module.css";
 import { Link } from "react-router-dom";
 
 const Login = () => {
