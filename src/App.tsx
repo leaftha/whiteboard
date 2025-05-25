@@ -1,14 +1,9 @@
 // src/App.tsx
 import React from 'react';
-import Router from './Router';
-import { AuthProvider } from './context/AuthContext';
+import Router from './router/Router';
 
 function App() {
-    return (
-        <AuthProvider>
-            <Router />
-        </AuthProvider>
-    );
+  return <Router />;
 }
 
 export default App;
