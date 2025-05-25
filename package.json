@@ -47,7 +47,8 @@
     "dev-server-node": "yarn run -T tsx watch ./server/server.node.ts",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "clean": "rimraf ./build ./dist ./node_modules/.cache"
   },
   "eslintConfig": {
     "extends": [
@@ -70,6 +71,7 @@
   "devDependencies": {
     "@types/react": "^19.1.1",
     "@types/react-dom": "^19.1.2",
-    "tsx": "^4.19.3"
+    "tsx": "^4.19.3",
+    "rimraf": "^5.0.0"
   }
 }

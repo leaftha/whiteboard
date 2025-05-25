@@ -17,4 +17,7 @@
     "jsx": "react-jsx"
   },
   "include": ["src", "store.ts", "src/App.tsx"]
+  "include": [
+    "src"
+  ]
 }
