@@ -2,8 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import style from "../style/main.module.css";
 import { useAuth } from "../context/AuthContext";
 import { auth } from "../firebase";
-import IntroduceTitle from "./introduceTitle";
 import Footer from "./footer";
+
 const Main = () => {
   const { currentUser, loading } = useAuth();
   const navigate = useNavigate();
@@ -50,9 +50,9 @@ const Main = () => {
         </div>
         <img className={style.titleImg} src="image/main1.jpg" alt="main img" />
       </div>
-
-      <IntroduceTitle />
-
+      <div className={style.subTitle}>
+        <h1>주요 기능</h1>
+      </div>
       <div className={style.descriptionContainer}>
         <div className={style.descriptionBody}>
           <article className={style.descriptionGridItem}>
