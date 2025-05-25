@@ -11,9 +11,9 @@ function Contact() {
         </h1>
         <p>언제 어디서나 팀과 함께 아이디어를 시각화하세요.</p>
         <div className={style.info}>
-          <p>Email: yourname@example.com</p>
-          <p>GitHub: github.com/yourusername</p>
-          <p>© 2025 YourName. All rights reserved.</p>
+          <p>Email: vltpcks@gmail.com</p>
+          <p>GitHub: https://github.com/leaftha/whiteboard</p>
+          <p>© 2025 SeChan Pi , Hyeyun Kim. All rights reserved.</p>
         </div>
       </div>
     </footer>
