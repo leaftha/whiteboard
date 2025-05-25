@@ -1,37 +1,26 @@
-import React, { useState } from 'react';
-import { ScheduleItem } from './SchedulePage';
+import React, { useState } from "react";
 
 interface ScheduleFormProps {
-  onAddSchedule: (schedule: Omit<ScheduleItem, 'id'>) => void;
+  onAdd: (content: string) => void;
 }
 
-const ScheduleForm: React.FC<ScheduleFormProps> = ({ onAddSchedule }) => {
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
+const ScheduleForm: React.FC<ScheduleFormProps> = ({ onAdd }) => {
+  const [content, setContent] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !date.trim()) {
-      alert('일정 제목과 날짜를 입력해주세요.');
-      return;
-    }
-    onAddSchedule({ title, date });
-    setTitle('');
-    setDate('');
+    if (!content.trim()) return;
+    onAdd(content.trim());
+    setContent("");
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="schedule-form">
       <input
         type="text"
-        placeholder="일정 제목"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <input
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder="새 일정 입력"
       />
       <button type="submit">추가</button>
     </form>

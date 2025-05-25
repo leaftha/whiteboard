@@ -1,25 +1,42 @@
-import React from 'react';
-import { ScheduleItem } from './SchedulePage';
+// src/schedule/ScheduleList.tsx
+import React from "react";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import ScheduleItem from "./ScheduleItem";
 
-interface ScheduleListProps {
-  schedules: ScheduleItem[];
+interface Task {
+  id: string;
+  content: string;
 }
 
-const ScheduleList: React.FC<ScheduleListProps> = ({ schedules }) => {
+interface Props {
+  id: string;
+  title: string;
+  tasks: Task[];
+}
+
+const ScheduleList = ({ id, title, tasks }: Props) => {
   return (
-    <div>
-      <h2>일정 목록</h2>
-      {schedules.length === 0 ? (
-        <p>등록된 일정이 없습니다.</p>
-      ) : (
-        <ul>
-          {schedules.map((item) => (
-            <li key={item.id}>
-              <strong>{item.title}</strong> - {item.date}
-            </li>
+    <div
+      style={{
+        margin: 8,
+        border: "1px solid lightgrey",
+        borderRadius: 4,
+        width: 300,
+        minHeight: 500,
+        backgroundColor: "#f0f0f0",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <h3 style={{ textAlign: "center" }}>{title}</h3>
+
+      <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
+        <div style={{ padding: 8, flexGrow: 1 }}>
+          {tasks.map((task) => (
+            <ScheduleItem key={task.id} id={task.id} content={task.content} />
           ))}
-        </ul>
-      )}
+        </div>
+      </SortableContext>
     </div>
   );
 };
