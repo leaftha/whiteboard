@@ -1,13 +1,13 @@
-import React from "react";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import React from 'react';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
-interface ScheduleItemProps {
+interface Props {
   id: string;
-  content: string;
+  text: string;
 }
 
-const ScheduleItem: React.FC<ScheduleItemProps> = ({ id, content }) => {
+const ScheduleItem: React.FC<Props> = ({ id, text }) => {
   const {
     attributes,
     listeners,
@@ -19,17 +19,12 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({ id, content }) => {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    padding: 10,
-    marginBottom: 8,
-    backgroundColor: "white",
-    borderRadius: 4,
-    boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-    cursor: "grab",
+    touchAction: 'none',
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {content}
+    <div className="task-card" ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      {text}
     </div>
   );
 };
