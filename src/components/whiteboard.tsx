@@ -52,7 +52,7 @@ function WhiteBoard() {
           editor.registerExternalAssetHandler("url", unfurlBookmarkUrl);
         }}
       />
-      <VideoCall roomId={roomId as string} />
+      {/* <VideoCall roomId={roomId as string} /> */}
     </div>
   );
 }
