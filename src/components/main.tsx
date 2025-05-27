@@ -56,17 +56,13 @@ const Main = () => {
       <div className={style.descriptionContainer}>
         <div className={style.descriptionBody}>
           <article className={style.descriptionGridItem}>
-            <div>
+            <img
+              className={style.descriptionImg}
+              src="image/main1.jpg"
+              alt="main img"
+            />
+            <div className={style.description}>
               <h1>title</h1>
-            </div>
-            <div>
-              <img
-                className={style.titleImg}
-                src="image/main1.jpg"
-                alt="main img"
-              />
-            </div>
-            <div>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
                 illum explicabo odio aliquam consequatur, doloremque, vitae quas
@@ -77,17 +73,13 @@ const Main = () => {
           </article>
 
           <article className={style.descriptionGridItem}>
-            <div>
+            <img
+              className={style.descriptionImg}
+              src="image/main1.jpg"
+              alt="main img"
+            />
+            <div className={style.description}>
               <h1>title</h1>
-            </div>
-            <div>
-              <img
-                className={style.titleImg}
-                src="image/main1.jpg"
-                alt="main img"
-              />
-            </div>
-            <div>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
                 illum explicabo odio aliquam consequatur, doloremque, vitae quas
@@ -96,6 +88,7 @@ const Main = () => {
               </p>
             </div>
           </article>
+
           <article className={style.descriptionGridItemColumn}>
             <div>
               <h1>title</h1>
@@ -117,17 +110,13 @@ const Main = () => {
             </div>
           </article>
           <article className={style.descriptionGridItem}>
-            <div>
+            <img
+              className={style.descriptionImg}
+              src="image/main1.jpg"
+              alt="main img"
+            />
+            <div className={style.description}>
               <h1>title</h1>
-            </div>
-            <div>
-              <img
-                className={style.titleImg}
-                src="image/main1.jpg"
-                alt="main img"
-              />
-            </div>
-            <div>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
                 illum explicabo odio aliquam consequatur, doloremque, vitae quas
@@ -136,18 +125,15 @@ const Main = () => {
               </p>
             </div>
           </article>
+
           <article className={style.descriptionGridItem}>
-            <div>
+            <img
+              className={style.descriptionImg}
+              src="image/main1.jpg"
+              alt="main img"
+            />
+            <div className={style.description}>
               <h1>title</h1>
-            </div>
-            <div>
-              <img
-                className={style.titleImg}
-                src="image/main1.jpg"
-                alt="main img"
-              />
-            </div>
-            <div>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
                 illum explicabo odio aliquam consequatur, doloremque, vitae quas
