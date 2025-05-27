@@ -1,36 +1,172 @@
+/* ScheduleForm.css */
+.schedule-form-container {
+  display: flex;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  height: 80px; /* 필요시 높이 조절 */
+  margin-bottom: 16px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
 .schedule-form {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  align-items: center; /* 세로 중앙 맞춤 */
+  gap: 12px; /* 요소 사이 간격 */
+  width: 100%;
+  max-width: 620px; /* 폼 최대 너비 제한 */
+  flex-wrap: nowrap; /* 한 줄 유지, 필요시 wrap으로 변경 가능 */
 }
 
-.schedule-form input[type='text'] {
-  flex-grow: 1;
-  padding: 8px 12px;
-  border-radius: 6px;
+.schedule-form input,
+.schedule-form select,
+.schedule-form button {
+  padding: 8px 14px;
   border: 1px solid #ccc;
-  font-size: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-sizing: border-box;
 }
 
-.schedule-form input[type='date'] {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  width: 140px;
+.schedule-form input:focus,
+.schedule-form select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 6px rgba(74, 144, 226, 0.5);
 }
 
-.add-button {
-  padding: 8px 16px;
-  border: none;
-  background-color: #1890ff;
+.schedule-form button {
+  background-color: #4a90e2;
   color: white;
-  border-radius: 6px;
-  font-weight: 600;
+  border: none;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  box-sizing: border-box;
 }
 
-.add-button:hover {
-  background-color: #40a9ff;
+.schedule-form button:hover {
+  background-color: #357abd;
+}
+
+/* ScheduleItem.css */
+.schedule-item {
+  background-color: #fefefe;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.schedule-item:hover {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.schedule-item .title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #222;
+  word-break: break-word;
+  flex-grow: 1;
+}
+
+.schedule-item .due-date {
+  font-size: 0.875rem;
+  color: #888;
+  margin-left: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.schedule-item .delete-button {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.schedule-item .delete-button:hover {
+  background-color: #f9d6d5;
+}
+
+/* ScheduleList.css */
+.schedule-list {
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  max-height: 500px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.schedule-list h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.25rem;
+  color: #333;
+  text-align: center;
+}
+
+/* SchedulePage.css */
+.schedule-page {
+  padding: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.columns-container {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+/* 각 컬럼 스타일 */
+.column {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  flex: 1 1 300px; /* 최소 너비 300px */
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 400px; /* 컬럼 최소 높이, 필요시 조절 */
+}
+
+.schedule-column-title {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  color: #333;
+  text-align: center;
+  font-weight: 700;
+}
+
+.schedule-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto; /* 스크롤 가능 */
+  padding-right: 8px; /* 스크롤바 공간 확보 */
 }

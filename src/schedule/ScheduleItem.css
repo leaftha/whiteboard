@@ -1,50 +1,60 @@
-.schedule-item {
-  padding: 12px 20px;
-  margin-bottom: 10px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+
+/* Scheduleitem.css */
+.task-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  border: 1px solid #e5e7eb; /* light gray border */
+  border-radius: 10px;
+  background-color: #fafafa;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   cursor: grab;
-  user-select: none;
-  transition: box-shadow 0.3s ease;
 }
-
-.schedule-item:active {
-  cursor: grabbing;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+.task-item:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
-.schedule-item .text-container {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.task-left {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
-
-.schedule-item .task-text {
-  font-weight: 600;
-  font-size: 16px;
-  margin-bottom: 4px;
+.task-content {
+  font-size: 15px;
+  color: #1f2937; /* slate-800 */
+  font-weight: 500;
+  word-break: break-word;
 }
-
-.schedule-item .deadline {
-  font-size: 12px;
-  color: #888;
+.task-deadline {
+  font-size: 13px;
+  color: #6b7280; /* slate-500 */
+  margin-top: 4px;
 }
-
-.delete-button {
-  background-color: #ff4d4f;
+.task-delete-btn {
+  background: none;
   border: none;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 4px;
+  color: #ef4444; /* red-500 */
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 14px;
+  padding: 4px 8px;
+  margin-left: 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+.task-delete-btn:hover {
+  background-color: rgba(239, 68, 68, 0.1); /* light red on hover */
 }
 
-.delete-button:hover {
-  background-color: #ff7875;
+.task-item {
+  user-select: none; /* 드래그 중 텍스트 선택 방지 */
+  cursor: grab;
+}
+
+.task-item:active {
+  cursor: grabbing;
 }

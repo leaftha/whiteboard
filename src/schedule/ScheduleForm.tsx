@@ -1,29 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { ColumnId } from "./SchedulePage";
+import "./ScheduleForm.css";
 
-interface Props {
-  onAdd: (text: string) => void;
+interface ScheduleFormProps {
+  onAddTask: (content: string, column: ColumnId, deadline?: string) => void;
 }
 
-const ScheduleForm: React.FC<Props> = ({ onAdd }) => {
-  const [value, setValue] = useState('');
+const ScheduleForm: React.FC<ScheduleFormProps> = ({ onAddTask }) => {
+  const [content, setContent] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [column, setColumn] = useState<ColumnId>("todo");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!value.trim()) return;
-    onAdd(value.trim());
-    setValue('');
+    if (!content.trim()) return;
+    onAddTask(content, column, deadline ? deadline : undefined);
+    setContent("");
+    setDeadline("");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="task-form">
-      <input
-        type="text"
-        placeholder="할 일 입력"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
-      <button type="submit">추가</button>
-    </form>
+    <div className="schedule-form-container">
+      <form className="schedule-form" onSubmit={handleSubmit}>
+        <input
+          id="content"
+          type="text"
+          className="form-input"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="할 일을 입력하세요"
+          required
+        />
+        <input
+          id="deadline"
+          type="date"
+          className="form-input"
+          value={deadline}
+          onChange={(e) => setDeadline(e.target.value)}
+        />
+        <select
+          id="column"
+          className="form-input"
+          value={column}
+          onChange={(e) => setColumn(e.target.value as ColumnId)}
+        >
+          <option value="todo">📝 예정</option>
+          <option value="inProgress">🚧 진행 중</option>
+          <option value="done">✅ 완료</option>
+        </select>
+        <button className="form-submit-btn" type="submit">
+          추가
+        </button>
+      </form>
+    </div>
   );
 };
 

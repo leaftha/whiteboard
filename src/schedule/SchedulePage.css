@@ -1,46 +1,151 @@
-.board {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  background: #f0f0f0;
+/* SchedulePage.css */
+/* 전체 보드 컨테이너 */
+.schedule-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 24px 32px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-.column {
-  flex: 1;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem;
+/* 보드 타이틀 */
+.schedule-container h1 {
+  text-align: center;
+  margin: 0 0 40px 0;
+  color: #222222;
+  font-weight: 700;
+  font-size: 2.5rem;
+  letter-spacing: -0.02em;
+}
+
+/* 메인 컨테이너: 좌측 컬럼 3개 세로 나열 + 우측 달력 */
+.main-content {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+/* 좌측 컬럼 그룹: 예정, 진행중, 완료 세로 배치 */
+.left-columns {
   display: flex;
   flex-direction: column;
+  gap: 24px;
+  flex: 1 1 0;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
-.task-list {
+/* 개별 컬럼 스타일 */
+.left-columns > div {
+  background-color: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  padding: 24px 20px;
   flex-grow: 1;
-  margin-top: 0.5rem;
-  min-height: 100px;
-}
-
-.task-card {
-  background-color: #e3f2fd;
-  padding: 0.75rem;
-  margin-bottom: 0.5rem;
-  border-radius: 6px;
-  cursor: grab;
-  user-select: none;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
-}
-
-.task-form {
+  transition: box-shadow 0.3s ease;
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  min-height: 180px; /* 최소 높이 */
 }
 
-.task-form input {
-  flex: 1;
-  padding: 0.5rem;
+.left-columns > div:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
-.task-form button {
-  padding: 0.5rem 1rem;
+/* 오른쪽 달력 사이드바 */
+.sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* 컬럼 제목 */
+.column-title {
+  margin-bottom: 24px;
+  font-weight: 700;
+  font-size: 1.4rem;
+  border-bottom: 3px solid #4a90e2;
+  padding-bottom: 12px;
+  color: #1f2937;
+  letter-spacing: -0.01em;
+}
+
+/* 할 일 없음 메시지 */
+.empty-message {
+  text-align: center;
+  color: #999;
+  font-size: 0.95rem;
+  margin-top: 24px;
+}
+
+/* 할 일 카드 */
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  margin-bottom: 16px;
+  border: 1px solid #e2e8f0;
+  cursor: grab;
+  transition: background-color 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.task-item:active {
+  cursor: grabbing;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.task-item:hover {
+  background-color: #f3f6fb;
+  border-color: #a5b4fc;
+  box-shadow: 0 8px 20px rgba(74, 144, 226, 0.25);
+}
+
+/* 할 일 텍스트 */
+.task-content {
+  flex-grow: 1;
+  font-size: 1rem;
+  color: #374151;
+  word-break: break-word;
+  user-select: none;
+}
+
+/* 마감일 표시 */
+.task-deadline {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-left: 16px;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* 삭제 버튼 */
+.task-delete-btn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 20px;
+  border-radius: 8px;
+  padding: 4px 8px;
+  transition: background-color 0.25s ease;
+  user-select: none;
+}
+
+.task-delete-btn:hover {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #dc2626;
 }
