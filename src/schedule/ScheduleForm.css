@@ -1,10 +1,10 @@
 /* ScheduleForm.css */
 .schedule-form-container {
   display: flex;
-  justify-content: center; /* 가로 중앙 정렬 */
-  align-items: center; /* 세로 중앙 정렬 */
-  height: 80px; /* 필요시 높이 조절 */
-  margin-bottom: 16px;
+  justify-content: center;
+  align-items: center;
+  height: auto; 
+  margin-bottom: 48px; 
   padding: 0 16px;
   box-sizing: border-box;
 }
@@ -12,7 +12,7 @@
 .schedule-form {
   display: flex;
   align-items: center; /* 세로 중앙 맞춤 */
-  gap: 12px; /* 요소 사이 간격 */
+  gap: 20px; /* 요소 사이 간격 */
   width: 100%;
   max-width: 620px; /* 폼 최대 너비 제한 */
   flex-wrap: nowrap; /* 한 줄 유지, 필요시 wrap으로 변경 가능 */
@@ -138,7 +138,7 @@
   gap: 24px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 16px;
+  margin-top: 0px;
 }
 
 /* 각 컬럼 스타일 */
@@ -169,4 +169,8 @@
   gap: 12px;
   overflow-y: auto; /* 스크롤 가능 */
   padding-right: 8px; /* 스크롤바 공간 확보 */
+}
+
+.schedule-column::-webkit-scrollbar {
+  width: 8px;
 }

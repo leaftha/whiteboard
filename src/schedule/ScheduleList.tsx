@@ -1,29 +1,30 @@
-
-
 import React from "react";
 import { useDroppable } from "@dnd-kit/core";
 import ScheduleItem from "./ScheduleItem";
 import { ColumnId } from "./SchedulePage";
 import "./ScheduleList.css";
+
 interface Task {
   id: string;
   content: string;
   deadline?: string;
 }
+
 interface ScheduleListProps {
   columnId: ColumnId;
   title: string;
   tasks: Task[];
   onDeleteTask: (taskId: string) => void;
+  onEditTask: (taskId: string, newContent: string) => void;
 }
+
 const ScheduleList: React.FC<ScheduleListProps> = ({
   columnId,
   title,
   tasks,
   onDeleteTask,
+  onEditTask,
 }) => {
-  console.log(`ScheduleList: ${columnId} 렌더링, 할 일 개수:`, tasks.length);
-
   const { setNodeRef, isOver } = useDroppable({
     id: columnId,
   });
@@ -43,6 +44,7 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
             key={task.id}
             task={task}
             onDelete={() => onDeleteTask(task.id)}
+            onEdit={(newContent) => onEditTask(task.id, newContent)}
           />
         ))
       )}
@@ -51,4 +53,3 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
 };
 
 export default ScheduleList;
-

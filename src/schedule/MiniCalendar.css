@@ -1,78 +1,85 @@
 .mini-calendar {
-  width: 100%;
-  max-width: 350px;
-  user-select: none;
+  font-family: 'Pretendard', sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+  background-color: #f9fafb;
+  border-radius: 12px;
 }
 
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
-  font-weight: bold;
+  margin-bottom: 12px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #374151;
 }
 
 .calendar-header button {
-  cursor: pointer;
   background: none;
   border: none;
-  font-size: 18px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #6b7280;
 }
 
-.days-row {
-  display: flex;
+.current-month {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.days-row,
+.week-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
 }
 
 .day-name {
-  flex: 1;
+  font-size: 12px;
   text-align: center;
-  font-weight: 600;
-  padding: 6px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.week-row {
-  display: flex;
+  color: #9ca3af;
+  font-weight: 500;
+  padding-bottom: 4px;
 }
 
 .day-cell {
-  flex: 1;
-  border: 1px solid #eee;
-  min-height: 70px;
-  padding: 4px 2px;
-  cursor: pointer;
   position: relative;
-  background-color: white;
+  background: #ffffff;
+  border-radius: 8px;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 13px;
+  color: #4b5563;
+  transition: background 0.2s;
+}
+
+.day-cell:hover {
+  background: #f3f4f6;
 }
 
 .day-cell.disabled {
-  background-color: #f5f5f5;
-  color: #aaa;
-  cursor: default;
+  color: #d1d5db;
 }
 
 .day-cell.today {
-  background-color: #fffae6;
-  border: 2px solid #f39c12;
+  border: 2px solid #3b82f6;
+  font-weight: 700;
+  border-radius: 50%;
+  color: #1d4ed8;
 }
 
 .day-number {
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 2px;
+  line-height: 1;
 }
 
-.day-tasks {
-  list-style: none;
-  padding-left: 4px;
-  margin: 0;
-  font-size: 11px;
-  max-height: 50px;
-  overflow-y: auto;
-}
-
-.day-tasks li {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.task-indicator {
+  width: 6px;
+  height: 6px;
+  background-color: #6b7280;
+  border-radius: 50%;
+  margin: 4px auto 0;
 }

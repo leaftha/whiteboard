@@ -37,13 +37,20 @@ const SchedulePage: React.FC = () => {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [activeColumn, setActiveColumn] = useState<ColumnId | null>(null);
 
+  const clearDragState = (taskId?: string) => {
+    if (!taskId || taskId === activeId) {
+      setActiveId(null);
+      setActiveColumn(null);
+    }
+  };
+
   const handleAddTask = (
     content: string,
     column: ColumnId,
     deadline?: string
   ) => {
     const newTask: Task = {
-      id: Date.now().toString(),
+      id: crypto.randomUUID(),
       content,
       deadline,
     };
@@ -58,6 +65,21 @@ const SchedulePage: React.FC = () => {
       ...prev,
       [column]: prev[column].filter((task) => task.id !== taskId),
     }));
+    clearDragState(taskId);
+  };
+
+  const handleEditTask = (
+    column: ColumnId,
+    taskId: string,
+    newContent: string
+  ) => {
+    setTasks((prev) => ({
+      ...prev,
+      [column]: prev[column].map((task) =>
+        task.id === taskId ? { ...task, content: newContent } : task
+      ),
+    }));
+    clearDragState(taskId);
   };
 
   const handleDragStart = (event: DragStartEvent) => {
@@ -82,9 +104,13 @@ const SchedulePage: React.FC = () => {
 
     const overId = over.id as string;
 
-    // 컬럼간 이동 (맨 앞에 삽입)
     if (["todo", "inProgress", "done"].includes(overId)) {
       const destColumn = overId as ColumnId;
+      if (destColumn === activeColumn) {
+        clearDragState();
+        return;
+      }
+
       const [movedTask] = sourceTasks.splice(taskIndex, 1);
 
       setTasks((prev) => ({
@@ -93,7 +119,6 @@ const SchedulePage: React.FC = () => {
         [destColumn]: [movedTask, ...prev[destColumn]],
       }));
     } else {
-      // 같은 컬럼 내 순서 변경
       const overIndex = sourceTasks.findIndex((task) => task.id === overId);
       if (overIndex === -1 || overIndex === taskIndex) return;
 
@@ -106,8 +131,7 @@ const SchedulePage: React.FC = () => {
       }));
     }
 
-    setActiveId(null);
-    setActiveColumn(null);
+    clearDragState();
   };
 
   const activeTask =
@@ -118,12 +142,8 @@ const SchedulePage: React.FC = () => {
   return (
     <div className="schedule-container">
       <h1>📅 일정 관리 보드</h1>
-
-      {/* 일정 추가 폼 */}
       <ScheduleForm onAddTask={handleAddTask} />
-
       <div className="main-content">
-        {/* 좌측 일정 칼럼 + 드래그앤드롭 */}
         <DndContext
           collisionDetection={closestCenter}
           onDragStart={handleDragStart}
@@ -143,23 +163,33 @@ const SchedulePage: React.FC = () => {
                 }
                 tasks={tasks[columnId]}
                 onDeleteTask={(taskId) => handleDeleteTask(columnId, taskId)}
+                onEditTask={(taskId, newContent) =>
+                  handleEditTask(columnId, taskId, newContent)
+                }
               />
             ))}
           </div>
 
           <DragOverlay>
             {activeTask && (
-              <ScheduleItem
-                task={activeTask}
-                onDelete={() => handleDeleteTask(activeColumn!, activeTask.id)}
-              />
+              <div
+                key={`overlay-${activeTask.id}`}
+                className="drag-overlay-item"
+              >
+                <ScheduleItem
+                  task={activeTask}
+                  onDelete={() => {}}
+                  onEdit={() => {}}
+                />
+              </div>
             )}
           </DragOverlay>
         </DndContext>
 
-        {/* 우측 사이드바: 미니 달력 */}
         <aside className="sidebar">
-          <MiniCalendar />
+          <MiniCalendar
+            tasks={[...tasks.todo, ...tasks.inProgress, ...tasks.done]}
+          />
         </aside>
       </div>
     </div>

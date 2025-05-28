@@ -1,151 +1,133 @@
-/* SchedulePage.css */
-/* 전체 보드 컨테이너 */
+/* 전체 레이아웃 */
 .schedule-container {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 24px 32px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  background-color: #f9fafb;
+  padding: 40px 20px;
+  color: #1f2937;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 110vh; /* 기존 100vh보다 10% 더 높게 설정 */
 }
 
-/* 보드 타이틀 */
+/* 제목 */
 .schedule-container h1 {
   text-align: center;
-  margin: 0 0 40px 0;
-  color: #222222;
+  margin-bottom: 40px;
+  font-size: 32px;
   font-weight: 700;
-  font-size: 2.5rem;
-  letter-spacing: -0.02em;
+  color: #111827;
 }
 
-/* 메인 컨테이너: 좌측 컬럼 3개 세로 나열 + 우측 달력 */
+/* 메인 콘텐츠: 사이드바 + 컬럼 */
 .main-content {
   display: flex;
-  gap: 32px;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
   align-items: flex-start;
 }
 
-/* 좌측 컬럼 그룹: 예정, 진행중, 완료 세로 배치 */
-.left-columns {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  flex: 1 1 0;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-/* 개별 컬럼 스타일 */
-.left-columns > div {
-  background-color: #fafafa;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-  padding: 24px 20px;
-  flex-grow: 1;
-  transition: box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  min-height: 180px; /* 최소 높이 */
-}
-
-.left-columns > div:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-}
-
-/* 오른쪽 달력 사이드바 */
+/* 사이드바 */
 .sidebar {
-  width: 320px;
-  flex-shrink: 0;
-  background: #f9f9f9;
-  border-radius: 12px;
+  width: 280px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #1f2937;
+}
+
+/* 미니 캘린더 */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.calendar-grid .day-name {
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.calendar-grid .day {
+  background: #f3f4f6;
+  border-radius: 10px;
+  padding: 10px 0;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.calendar-grid .day:hover {
+  background-color: #e5e7eb;
+  transform: scale(1.05);
+}
+
+.calendar-grid .today {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 700;
+}
+
+/* 일정 컬럼 래퍼 */
+.columns {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+}
+
+/* 개별 컬럼 */
+.schedule-column {
+  flex: 1;
+  background: #ffffff;
   padding: 20px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-  height: fit-content;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
   max-height: 80vh;
   overflow-y: auto;
 }
 
-/* 컬럼 제목 */
-.column-title {
-  margin-bottom: 24px;
-  font-weight: 700;
-  font-size: 1.4rem;
-  border-bottom: 3px solid #4a90e2;
-  padding-bottom: 12px;
-  color: #1f2937;
-  letter-spacing: -0.01em;
+.schedule-column h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 20px;
 }
 
-/* 할 일 없음 메시지 */
-.empty-message {
+/* 드래그 중 스타일 */
+.droppable-over {
+  border: 2px dashed #60a5fa;
+  background-color: #eff6ff;
+  transition: background 0.2s, border 0.2s;
+}
+
+/* 비어 있을 때 */
+.empty-msg {
+  color: #9ca3af;
+  font-size: 14px;
   text-align: center;
-  color: #999;
-  font-size: 0.95rem;
-  margin-top: 24px;
+  margin-top: 40px;
 }
 
-/* 할 일 카드 */
-.task-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 20px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-  margin-bottom: 16px;
-  border: 1px solid #e2e8f0;
-  cursor: grab;
-  transition: background-color 0.25s ease, border-color 0.25s ease,
-    box-shadow 0.25s ease;
+/* 스크롤바 스타일 */
+.schedule-column::-webkit-scrollbar {
+  width: 6px;
 }
 
-.task-item:active {
-  cursor: grabbing;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-}
-
-.task-item:hover {
-  background-color: #f3f6fb;
-  border-color: #a5b4fc;
-  box-shadow: 0 8px 20px rgba(74, 144, 226, 0.25);
-}
-
-/* 할 일 텍스트 */
-.task-content {
-  flex-grow: 1;
-  font-size: 1rem;
-  color: #374151;
-  word-break: break-word;
-  user-select: none;
-}
-
-/* 마감일 표시 */
-.task-deadline {
-  font-size: 0.85rem;
-  color: #6b7280;
-  margin-left: 16px;
-  white-space: nowrap;
-  user-select: none;
-}
-
-/* 삭제 버튼 */
-.task-delete-btn {
-  background: none;
-  border: none;
-  color: #ef4444;
-  font-size: 20px;
-  cursor: pointer;
-  margin-left: 20px;
-  border-radius: 8px;
-  padding: 4px 8px;
-  transition: background-color 0.25s ease;
-  user-select: none;
-}
-
-.task-delete-btn:hover {
-  background-color: rgba(239, 68, 68, 0.15);
-  color: #dc2626;
+.schedule-column::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
 }

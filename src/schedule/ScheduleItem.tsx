@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDraggable } from "@dnd-kit/core";
 import "./ScheduleItem.css";
 
@@ -11,44 +11,106 @@ interface Task {
 interface ScheduleItemProps {
   task: Task;
   onDelete: () => void;
+  onEdit: (newContent: string) => void;
 }
 
-const ScheduleItem: React.FC<ScheduleItemProps> = ({ task, onDelete }) => {
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id: task.id,
-    });
+const ScheduleItem: React.FC<ScheduleItemProps> = ({
+  task,
+  onDelete,
+  onEdit,
+}) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editContent, setEditContent] = useState(task.content);
+
+  useEffect(() => {
+    setEditContent(task.content);
+  }, [task.content]);
+
+  // 드래그 가능 영역을 따로 뽑기 위해 useDraggable에 id만 넘기고
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: task.id,
+  });
 
   const style: React.CSSProperties = {
     transform: transform
-      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
+      ? `translate(${transform.x}px, ${transform.y}px)`
       : undefined,
-    zIndex: isDragging ? 9999 : undefined,
-    position: isDragging ? "relative" : undefined,
+    transition: isDragging ? "none" : "transform 200ms ease",
+    opacity: isDragging ? 0.8 : 1,
+    cursor: isDragging ? "grabbing" : "default", // 기본 커서는 드래그 핸들에만 grab 씀
   };
 
-  const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation(); // 드래그 이벤트 전파 차단
-    console.log("삭제 버튼 클릭, task id:", task.id);
-    onDelete();
+  const handleSave = () => {
+    if (editContent.trim()) {
+      onEdit(editContent.trim());
+      setIsEditing(false);
+    }
   };
 
   return (
-    <div className="task-item" ref={setNodeRef} style={style}>
-      {/* 드래그 가능한 핸들러 영역에만 listeners, attributes 적용 */}
-      <div className="task-left" {...listeners} {...attributes} style={{ cursor: "grab" }}>
-        <div className="task-content">{task.content}</div>
-        {task.deadline && <div className="task-deadline">📅 {task.deadline}</div>}
-      </div>
+    <div
+      ref={setNodeRef} // 전체 블럭에 ref는 붙임 (드래그 라이브러리용)
+      style={style}
+      className="schedule-item"
+    >
+      {isEditing ? (
+        <div className="edit-form" onClick={(e) => e.stopPropagation()}>
+          <input
+            type="text"
+            value={editContent}
+            onChange={(e) => setEditContent(e.target.value)}
+            autoFocus
+          />
+          <button onClick={handleSave}>저장</button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsEditing(false);
+            }}
+          >
+            취소
+          </button>
+        </div>
+      ) : (
+        <>
+          {/* 드래그 가능 영역: 여기만 listeners, attributes 붙임 */}
+          <div
+            className="task-content"
+            {...listeners}
+            {...attributes}
+            style={{ userSelect: "none", cursor: "grab" }}
+          >
+            <p>{task.content}</p>
+            {task.deadline && <span className="deadline">{task.deadline}</span>}
+          </div>
 
-      {/* 삭제 버튼에는 드래그 관련 이벤트 비적용 */}
-      <button
-        className="task-delete-btn"
-        onClick={handleDeleteClick}
-        type="button"
-      >
-        삭제
-      </button>
+          {/* 클릭만 가능한 수정/삭제 버튼 */}
+          <div className="task-actions" style={{ pointerEvents: "auto" }}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsEditing(true);
+              }}
+              aria-label="Edit task"
+              title="수정"
+              type="button"
+            >
+              ✏️
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete();
+              }}
+              aria-label="Delete task"
+              title="삭제"
+              type="button"
+            >
+              🗑️
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
