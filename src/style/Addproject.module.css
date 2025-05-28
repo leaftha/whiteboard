@@ -1,0 +1,72 @@
+.main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.formContainer {
+  background-color: #fff;
+  width: 500px;
+  max-width: 90%;
+  padding: 2rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.formContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.inpuBox {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.inpuBox label {
+  width: 100px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.inpuBox input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.buttonBox {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.buttonBox button {
+  background-color: #558bcf;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buttonBox button:hover {
+  background-color: #3f6cad;
+}
