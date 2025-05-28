@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AddProject from "./Addproject";
 import style from "../style/Myproject.module.css";
 import Loading from "./loading";
@@ -12,6 +12,8 @@ type Project = {
   roomId: string;
   projectName: string;
   users: string[];
+  maxMenber: number;
+  startDate: Date;
 };
 
 const MyProject = () => {
@@ -99,7 +101,9 @@ const MyProject = () => {
         <Loading />
       )}
 
-      {isModal && <AddProject />}
+      {isModal && (
+        <AddProject setProjects={setProjects} setIsMadal={setIsMadal} />
+      )}
     </div>
   );
 };
