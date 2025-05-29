@@ -84,3 +84,4 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
 };
 
 export default MiniCalendar;
+// MiniCalendar.tsx

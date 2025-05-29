@@ -79,6 +79,17 @@
   font-weight: 700;
 }
 
+/* 캘린더 헤더 */
+.calendar-grid .event-dot {
+  display: block;
+  margin: 4px auto 0;
+  width: 6px;
+  height: 6px;
+  background-color: #3b82f6; /* 파란색 */
+  border-radius: 50%; /* 완전한 원 */
+}
+
+
 /* 일정 컬럼 래퍼 */
 .columns {
   display: flex;
@@ -131,3 +142,5 @@
   background: #cbd5e1;
   border-radius: 3px;
 }
+
+
