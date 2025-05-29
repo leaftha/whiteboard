@@ -9,7 +9,6 @@ import SignUp from './components/signup'; // 회원가입
 import SchedulePage from './schedule/SchedulePage'; // 일정 관리 페이지
 
 import './App.css';
-import './index.css';
 
 const AppRouter: React.FC = () => {
   return (

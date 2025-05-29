@@ -60,7 +60,7 @@
   font-size: 13px;
   color: #4b5563;
   transition: background 0.2s;
-  line-height: 1; /* day-number 대체 */
+  line-height: 1; 
 }
 
 .day-cell:hover {
