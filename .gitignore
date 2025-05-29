@@ -4,7 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
-
+.env
+whiteboard-374db-firebase-adminsdk-fbsvc-33d66f4d2c.json
 # testing
 /coverage
 

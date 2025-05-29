@@ -1,9 +1,9 @@
-// App.tsx
-import React from 'react'
-import SchedulePage from './schedule/SchedulePage'
+// src/App.tsx
+import React from 'react';
+import Router from './router/Router';
 
 function App() {
-  return <SchedulePage />
+  return <Router />;
 }
 
-export default App
+export default App;
