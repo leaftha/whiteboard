@@ -5,7 +5,16 @@ import {
   DragStartEvent,
   DragEndEvent,
   DragOverlay,
+  useSensor,
+  useSensors,
+  PointerSensor,
+  KeyboardSensor,
 } from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 import ScheduleList from "./ScheduleList";
 import ScheduleForm from "./ScheduleForm";
@@ -36,6 +45,8 @@ const SchedulePage: React.FC = () => {
   const [tasks, setTasks] = useState<TasksByColumn>(initialTasks);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [activeColumn, setActiveColumn] = useState<ColumnId | null>(null);
+
+  const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor));
 
   const clearDragState = (taskId?: string) => {
     if (!taskId || taskId === activeId) {
@@ -98,18 +109,19 @@ const SchedulePage: React.FC = () => {
     const { over } = event;
     if (!over || !activeId || !activeColumn) return;
 
-    const sourceTasks = [...tasks[activeColumn]];
-    const taskIndex = sourceTasks.findIndex((task) => task.id === activeId);
-    if (taskIndex === -1) return;
-
     const overId = over.id as string;
 
+    // 칼럼간 이동 여부 판단
     if (["todo", "inProgress", "done"].includes(overId)) {
       const destColumn = overId as ColumnId;
       if (destColumn === activeColumn) {
         clearDragState();
         return;
       }
+
+      const sourceTasks = [...tasks[activeColumn]];
+      const taskIndex = sourceTasks.findIndex((task) => task.id === activeId);
+      if (taskIndex === -1) return;
 
       const [movedTask] = sourceTasks.splice(taskIndex, 1);
 
@@ -119,15 +131,21 @@ const SchedulePage: React.FC = () => {
         [destColumn]: [movedTask, ...prev[destColumn]],
       }));
     } else {
-      const overIndex = sourceTasks.findIndex((task) => task.id === overId);
-      if (overIndex === -1 || overIndex === taskIndex) return;
+      // 동일 칼럼 내 순서 변경
+      const sourceTasks = [...tasks[activeColumn]];
+      const oldIndex = sourceTasks.findIndex((task) => task.id === activeId);
+      const newIndex = sourceTasks.findIndex((task) => task.id === overId);
 
-      const [movedTask] = sourceTasks.splice(taskIndex, 1);
-      sourceTasks.splice(overIndex, 0, movedTask);
+      if (oldIndex === -1 || newIndex === -1 || oldIndex === newIndex) {
+        clearDragState();
+        return;
+      }
+
+      const newTasks = arrayMove(sourceTasks, oldIndex, newIndex);
 
       setTasks((prev) => ({
         ...prev,
-        [activeColumn]: sourceTasks,
+        [activeColumn]: newTasks,
       }));
     }
 
@@ -145,43 +163,44 @@ const SchedulePage: React.FC = () => {
       <ScheduleForm onAddTask={handleAddTask} />
       <div className="main-content">
         <DndContext
+          sensors={sensors}
           collisionDetection={closestCenter}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
         >
           <div className="columns">
             {(["todo", "inProgress", "done"] as ColumnId[]).map((columnId) => (
-              <ScheduleList
+              <SortableContext
                 key={columnId}
-                columnId={columnId}
-                title={
-                  columnId === "todo"
-                    ? "📝 예정"
-                    : columnId === "inProgress"
-                    ? "🚧 진행 중"
-                    : "✅ 완료"
-                }
-                tasks={tasks[columnId]}
-                onDeleteTask={(taskId) => handleDeleteTask(columnId, taskId)}
-                onEditTask={(taskId, newContent) =>
-                  handleEditTask(columnId, taskId, newContent)
-                }
-              />
+                items={tasks[columnId].map((task) => task.id)}
+                strategy={verticalListSortingStrategy}
+              >
+                <ScheduleList
+                  columnId={columnId}
+                  title={
+                    columnId === "todo"
+                      ? "📝 예정"
+                      : columnId === "inProgress"
+                      ? "🚧 진행 중"
+                      : "✅ 완료"
+                  }
+                  tasks={tasks[columnId]}
+                  onDeleteTask={(taskId) => handleDeleteTask(columnId, taskId)}
+                  onEditTask={(taskId, newContent) =>
+                    handleEditTask(columnId, taskId, newContent)
+                  }
+                />
+              </SortableContext>
             ))}
           </div>
 
           <DragOverlay>
             {activeTask && (
-              <div
-                key={`overlay-${activeTask.id}`}
-                className="drag-overlay-item"
-              >
-                <ScheduleItem
-                  task={activeTask}
-                  onDelete={() => {}}
-                  onEdit={() => {}}
-                />
-              </div>
+              <ScheduleItem
+                task={activeTask}
+                onDelete={() => {}}
+                onEdit={() => {}}
+              />
             )}
           </DragOverlay>
         </DndContext>
@@ -197,3 +216,4 @@ const SchedulePage: React.FC = () => {
 };
 
 export default SchedulePage;
+

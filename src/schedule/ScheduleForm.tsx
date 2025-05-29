@@ -35,14 +35,21 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ onAddTask }) => {
         value={deadline}
         onChange={(e) => setDeadline(e.target.value)}
       />
-      <select value={column} onChange={(e) => setColumn(e.target.value as ColumnId)}>
+      <select
+        value={column}
+        onChange={(e) => setColumn(e.target.value as ColumnId)}
+      >
         <option value="todo">예정</option>
         <option value="inProgress">진행 중</option>
         <option value="done">완료</option>
       </select>
-      <button type="submit">추가</button>
+      <button type="submit" className="add-button">
+        추가
+      </button>
     </form>
   );
 };
 
 export default ScheduleForm;
+
+

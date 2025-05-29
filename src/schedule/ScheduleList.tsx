@@ -1,5 +1,6 @@
 import React from "react";
 import { useDroppable } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import ScheduleItem from "./ScheduleItem";
 import { ColumnId } from "./SchedulePage";
 import "./ScheduleList.css";
@@ -39,17 +40,21 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
       {tasks.length === 0 ? (
         <p className="empty-msg">할 일이 없습니다.</p>
       ) : (
-        tasks.map((task) => (
-          <ScheduleItem
-            key={task.id}
-            task={task}
-            onDelete={() => onDeleteTask(task.id)}
-            onEdit={(newContent) => onEditTask(task.id, newContent)}
-          />
-        ))
+        <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
+          {tasks.map((task) => (
+            <ScheduleItem
+              key={task.id}
+              task={task}
+              onDelete={() => onDeleteTask(task.id)}
+              onEdit={(newContent) => onEditTask(task.id, newContent)}
+            />
+          ))}
+        </SortableContext>
       )}
     </div>
   );
 };
 
 export default ScheduleList;
+
+

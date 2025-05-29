@@ -13,6 +13,7 @@
   display: flex;
   align-items: center; /* 세로 중앙 맞춤 */
   gap: 20px; /* 요소 사이 간격 */
+  margin-bottom: 10px; /* 폼 아래 여백 */
   width: 100%;
   max-width: 620px; /* 폼 최대 너비 제한 */
   flex-wrap: nowrap; /* 한 줄 유지, 필요시 wrap으로 변경 가능 */
@@ -41,7 +42,7 @@
   color: white;
   border: none;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
   transition: background-color 0.3s ease;
   box-sizing: border-box;
 }
@@ -119,6 +120,39 @@
   color: #333;
   text-align: center;
 }
+
+.schedule-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.schedule-button.add {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.schedule-button.add:hover {
+  background-color: #2563eb;
+}
+
+.schedule-button.edit {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+.schedule-button.edit:hover {
+  background-color: #059669;
+}
+
+.schedule-button:active {
+  transform: scale(0.97);
+}
+
 
 /* SchedulePage.css */
 .schedule-page {

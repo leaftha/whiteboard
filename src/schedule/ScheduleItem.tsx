@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useDraggable } from "@dnd-kit/core";
 import "./ScheduleItem.css";
@@ -26,7 +27,6 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({
     setEditContent(task.content);
   }, [task.content]);
 
-  // 드래그 가능 영역을 따로 뽑기 위해 useDraggable에 id만 넘기고
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: task.id,
   });
@@ -37,7 +37,7 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({
       : undefined,
     transition: isDragging ? "none" : "transform 200ms ease",
     opacity: isDragging ? 0.8 : 1,
-    cursor: isDragging ? "grabbing" : "default", // 기본 커서는 드래그 핸들에만 grab 씀
+    cursor: isDragging ? "grabbing" : "default",
   };
 
   const handleSave = () => {
@@ -48,45 +48,51 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({
   };
 
   return (
-    <div
-      ref={setNodeRef} // 전체 블럭에 ref는 붙임 (드래그 라이브러리용)
-      style={style}
-      className="schedule-item"
-    >
+    <div ref={setNodeRef} style={style} className="task-item">
       {isEditing ? (
-        <div className="edit-form" onClick={(e) => e.stopPropagation()}>
+        <div className="edit-form">
           <input
             type="text"
             value={editContent}
             onChange={(e) => setEditContent(e.target.value)}
             autoFocus
           />
-          <button onClick={handleSave}>저장</button>
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsEditing(false);
-            }}
+            className="icon-small-button save"
+            onClick={handleSave}
+            aria-label="저장"
+            title="저장"
+            type="button"
           >
-            취소
+            💾
+          </button>
+          <button
+            className="icon-small-button cancel"
+            onClick={() => setIsEditing(false)}
+            aria-label="취소"
+            title="취소"
+            type="button"
+          >
+            ❌
           </button>
         </div>
       ) : (
         <>
-          {/* 드래그 가능 영역: 여기만 listeners, attributes 붙임 */}
+          {/* 왼쪽: 드래그 핸들 및 내용 */}
           <div
-            className="task-content"
+            className="task-left"
             {...listeners}
             {...attributes}
-            style={{ userSelect: "none", cursor: "grab" }}
+            style={{ cursor: "grab" }}
           >
-            <p>{task.content}</p>
-            {task.deadline && <span className="deadline">{task.deadline}</span>}
+            <div className="task-content">{task.content}</div>
+            {task.deadline && <div className="task-deadline">{task.deadline}</div>}
           </div>
 
-          {/* 클릭만 가능한 수정/삭제 버튼 */}
-          <div className="task-actions" style={{ pointerEvents: "auto" }}>
+          {/* 오른쪽: 수정 / 삭제 버튼 */}
+          <div className="task-actions">
             <button
+              className="icon-button edit-button"
               onClick={(e) => {
                 e.stopPropagation();
                 setIsEditing(true);
@@ -98,6 +104,7 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({
               ✏️
             </button>
             <button
+              className="icon-button delete-button"
               onClick={(e) => {
                 e.stopPropagation();
                 onDelete();
@@ -116,3 +123,7 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({
 };
 
 export default ScheduleItem;
+
+
+
+
