@@ -1,0 +1,210 @@
+/* ScheduleForm.css */
+.schedule-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto; 
+  margin-bottom: 48px; 
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.schedule-form {
+  display: flex;
+  align-items: center; /* 세로 중앙 맞춤 */
+  gap: 20px; /* 요소 사이 간격 */
+  margin-bottom: 10px; /* 폼 아래 여백 */
+  width: 100%;
+  max-width: 620px; /* 폼 최대 너비 제한 */
+  flex-wrap: nowrap; /* 한 줄 유지, 필요시 wrap으로 변경 가능 */
+}
+
+.schedule-form input,
+.schedule-form select,
+.schedule-form button {
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.schedule-form input:focus,
+.schedule-form select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 6px rgba(74, 144, 226, 0.5);
+}
+
+.schedule-form button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.schedule-form button:hover {
+  background-color: #357abd;
+}
+
+/* ScheduleItem.css */
+.schedule-item {
+  background-color: #fefefe;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.schedule-item:hover {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.schedule-item .title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #222;
+  word-break: break-word;
+  flex-grow: 1;
+}
+
+.schedule-item .due-date {
+  font-size: 0.875rem;
+  color: #888;
+  margin-left: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.schedule-item .delete-button {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.schedule-item .delete-button:hover {
+  background-color: #f9d6d5;
+}
+
+/* ScheduleList.css */
+.schedule-list {
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  max-height: 500px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.schedule-list h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.25rem;
+  color: #333;
+  text-align: center;
+}
+
+.schedule-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.schedule-button.add {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.schedule-button.add:hover {
+  background-color: #2563eb;
+}
+
+.schedule-button.edit {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+.schedule-button.edit:hover {
+  background-color: #059669;
+}
+
+.schedule-button:active {
+  transform: scale(0.97);
+}
+
+
+/* SchedulePage.css */
+.schedule-page {
+  padding: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.columns-container {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0px;
+}
+
+/* 각 컬럼 스타일 */
+.column {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  flex: 1 1 300px; /* 최소 너비 300px */
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 400px; /* 컬럼 최소 높이, 필요시 조절 */
+}
+
+.schedule-column-title {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  color: #333;
+  text-align: center;
+  font-weight: 700;
+}
+
+.schedule-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto; /* 스크롤 가능 */
+  padding-right: 8px; /* 스크롤바 공간 확보 */
+}
+
+.schedule-column::-webkit-scrollbar {
+  width: 8px;
+}

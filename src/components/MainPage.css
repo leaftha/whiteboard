@@ -1,0 +1,83 @@
+/* MainPage.css */
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.main-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 수직 가운데 정렬 */
+  align-items: center; /* 수평 가운데 정렬 */
+  min-height: 900px; /* 화면 전체 높이 */
+  width: 100%;
+  max-width: 1800px; /* 카드 최대 너비 */
+  margin: 10rem auto; /* 위아래 여백 추가 */
+  padding: 3rem 2rem;
+  background-color: #ffffff; /* 카드 배경 */
+  border-radius: 16px; /* 모서리 둥글게 */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* 카드 그림자 */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #222;
+  box-sizing: border-box;
+}
+
+.main-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.main-header h1 {
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  color: #0078d7;
+}
+
+.main-header p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.feature-section {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  background-color: #f0f4f8;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  width: 300px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card h2 {
+  margin-bottom: 1rem;
+  color: #0078d7;
+}
+
+.feature-card p {
+  font-size: 1rem;
+  color: #333;
+}
+
+.main-footer {
+  margin-top: 3rem;
+  text-align: center;
+  color: #888;
+  font-size: 0.9rem;
+  padding: 1rem;
+}
