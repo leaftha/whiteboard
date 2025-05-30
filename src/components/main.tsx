@@ -89,22 +89,17 @@ const Main = () => {
           </article>
 
           <article className={style.descriptionGridItemColumn}>
-            <div>
-              <h1>title</h1>
-            </div>
-            <div>
-              {/* <img
-                className={style.titleImg}
-                src="image/main1.jpg"
-                alt="main img"
-              /> */}
-            </div>
-            <div>
+            <img
+              className={style.descriptionImg}
+              src="image/descriptionImg3.gif"
+              alt="description Img"
+            />
+            <div className={style.descriptionColuem}>
+              <h1>일정관리 시스템</h1>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
-                illum explicabo odio aliquam consequatur, doloremque, vitae quas
-                est voluptates dignissimos quaerat ut commodi in. Architecto
-                atque quam quo molestiae provident?
+                프로젝트 일정을 손쉽게 추가하고 관리하세요.
+                <br />
+                팀원들과 실시간 대화로 효율적인 협업 환경을 제공합니다.
               </p>
             </div>
           </article>
