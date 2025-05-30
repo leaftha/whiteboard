@@ -1,0 +1,17 @@
+.footerContainer {
+  position: relative;
+  height: 400px;
+  clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0 100%);
+}
+
+.footerWrapper {
+  position: relative;
+  height: calc(100vh + 400px);
+  top: -100vh;
+}
+
+.footerContent {
+  height: 400px;
+  position: sticky;
+  top: calc(100vh - 400px);
+}

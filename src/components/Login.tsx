@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import style from "../style/Login.module.css";
+import { Link } from "react-router-dom";
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -34,32 +37,37 @@ const Login = () => {
   };
 
   return (
-    <div style={{ padding: "2rem", maxWidth: "400px", margin: "auto" }}>
-      <h2>로그인</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          name="email"
-          placeholder="이메일"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          style={{ display: "block", marginBottom: "1rem", width: "100%" }}
-        />
-        <input
-          name="password"
-          placeholder="비밀번호"
-          type="password"
-          value={formData.password}
-          onChange={handleChange}
-          style={{ display: "block", marginBottom: "1rem", width: "100%" }}
-        />
-        <button type="submit">로그인</button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-      </form>
+    <div className={style.main}>
+      <div className={style.body}>
+        <h2 className={style.title}>로그인</h2>
+        <form onSubmit={handleSubmit} className={style.form}>
+          <div className={style.formInput}>
+            <input
+              name="email"
+              placeholder="이메일"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <input
+              name="password"
+              placeholder="비밀번호"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit">로그인</button>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+        </form>
 
-      <p style={{ marginTop: "1rem", textAlign: "center" }}>
-        아직 계정이 없으신가요? <a href="/signup">회원가입</a>
-      </p>
+        <p className={style.description}>
+          아직 계정이 없으신가요?{" "}
+          <Link className={style.link} to="/signup">
+            회원가입
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };

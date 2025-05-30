@@ -1,2 +1,4 @@
-// src/gloval.d.ts
-declare module '*.module.css';
+declare module "*.module.css" {
+  const content: { [key: string]: string };
+  export = content;
+}
