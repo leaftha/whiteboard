@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -22,6 +22,9 @@ import ScheduleItem from "./ScheduleItem";
 import MiniCalendar from "./MiniCalendar";
 
 import style from "../style/SchedulePage.module.css";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import { useParams } from "react-router-dom";
 
 export type ColumnId = "todo" | "inProgress" | "done";
 
@@ -45,11 +48,63 @@ const SchedulePage: React.FC = () => {
   const [tasks, setTasks] = useState<TasksByColumn>(initialTasks);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [activeColumn, setActiveColumn] = useState<ColumnId | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  let { id } = useParams();
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor)
   );
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      if (!id) return;
+
+      try {
+        const docRef = doc(db, "schedules", id);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setTasks({
+            todo: data.todo ?? [],
+            inProgress: data.inProgress ?? [],
+            done: data.done ?? [],
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      } finally {
+        setIsLoaded(true);
+      }
+    };
+
+    fetchTasks();
+  }, [id]);
+
+  useEffect(() => {
+    const saveTasks = async () => {
+      if (!id || !isLoaded) return;
+
+      try {
+        const docRef = doc(db, "schedules", id);
+        await setDoc(
+          docRef,
+          {
+            todo: [...tasks.todo],
+            inProgress: [...tasks.inProgress],
+            done: [...tasks.done],
+          },
+          { merge: true }
+        );
+      } catch (error) {
+        console.error("Error saving tasks:", error);
+      }
+    };
+
+    saveTasks();
+  }, [tasks, id, isLoaded]);
 
   const clearDragState = (taskId?: string) => {
     if (!taskId || taskId === activeId) {
@@ -159,7 +214,7 @@ const SchedulePage: React.FC = () => {
     activeId && activeColumn
       ? tasks[activeColumn].find((task) => task.id === activeId)
       : null;
-
+  console.log(tasks);
   return (
     <div className={style.scheduleContainer}>
       <h1>📅 일정 관리 보드</h1>

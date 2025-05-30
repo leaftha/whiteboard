@@ -10,6 +10,7 @@ import Loading from "./loading";
 type Project = {
   id: string;
   roomId: string;
+  scheduleId: string;
   projectName: string;
   users: string[];
   maxMenber: number;

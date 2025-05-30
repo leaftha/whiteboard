@@ -19,6 +19,7 @@ interface AddProjectProps {
 type Project = {
   id: string;
   roomId: string;
+  scheduleId: string;
   projectName: string;
   users: string[];
   maxMenber: number;
@@ -39,12 +40,18 @@ const AddProject = ({ setIsMadal, setProjects }: AddProjectProps) => {
     const id = uuid();
     const currentDay = new Date();
     try {
+      const docschedulesRef = await addDoc(collection(db, "schedules"), {
+        done: [],
+        inProgress: [],
+        todo: [],
+      });
       const docRef = await addDoc(collection(db, "project"), {
         projectName: title,
         roomId: id,
         users: arrayUnion(currentUser?.uid),
         maxMenber: menber,
         startDate: currentDay,
+        scheduleId: docschedulesRef.id,
       });
 
       if (currentUser?.uid) {
@@ -60,6 +67,7 @@ const AddProject = ({ setIsMadal, setProjects }: AddProjectProps) => {
         users: currentUser?.uid ? [currentUser.uid] : [],
         maxMenber: menber,
         startDate: currentDay,
+        scheduleId: docschedulesRef.id,
       };
 
       setProjects((prev) => [...prev, newProject]);
