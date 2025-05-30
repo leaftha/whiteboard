@@ -1,0 +1,92 @@
+.mini-calendar {
+  font-family: 'Pretendard', sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+  background-color: #f9fafb;
+  border-radius: 12px;
+}
+
+/* 헤더 */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.calendar-header button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+/* 현재 월 표시 */
+.current-month {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* 요일 / 날짜 행 공통 */
+.days-row,
+.week-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+/* 요일 텍스트 */
+.day-name {
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  padding-bottom: 4px;
+  color: #9ca3af;
+}
+
+/* 날짜 셀 */
+.day-cell {
+  position: relative;
+  background: #ffffff;
+  border-radius: 8px;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 13px;
+  color: #4b5563;
+  transition: background 0.2s;
+  line-height: 1; 
+}
+
+.day-cell:hover {
+  background-color: #f3f4f6;
+}
+
+.day-cell.disabled {
+  color: #d1d5db;
+}
+
+.day-cell.today {
+  border: 2px solid #3b82f6;
+  border-radius: 5px;
+  font-weight: 700;
+  color: #1d4ed8;
+}
+
+/* 작업 존재 표시 점 */
+.task-indicator {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  background-color: #6b7280;
+  border-radius: 50%;
+  pointer-events: none;
+}

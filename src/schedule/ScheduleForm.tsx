@@ -1,41 +1,55 @@
-import React, { useState } from 'react';
-import { ScheduleItem } from './SchedulePage';
+import React, { useState } from "react";
+import { ColumnId } from "./SchedulePage";
+import "./ScheduleForm.css";
 
 interface ScheduleFormProps {
-  onAddSchedule: (schedule: Omit<ScheduleItem, 'id'>) => void;
+  onAddTask: (content: string, column: ColumnId, deadline?: string) => void;
 }
 
-const ScheduleForm: React.FC<ScheduleFormProps> = ({ onAddSchedule }) => {
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
+const ScheduleForm: React.FC<ScheduleFormProps> = ({ onAddTask }) => {
+  const [content, setContent] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [column, setColumn] = useState<ColumnId>("todo");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !date.trim()) {
-      alert('일정 제목과 날짜를 입력해주세요.');
-      return;
+    if (content.trim()) {
+      onAddTask(content, column, deadline);
+      setContent("");
+      setDeadline("");
+      setColumn("todo");
     }
-    onAddSchedule({ title, date });
-    setTitle('');
-    setDate('');
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="schedule-form">
       <input
         type="text"
-        placeholder="일정 제목"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder="할 일을 입력하세요"
+        required
       />
       <input
         type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
+        value={deadline}
+        onChange={(e) => setDeadline(e.target.value)}
       />
-      <button type="submit">추가</button>
+      <select
+        value={column}
+        onChange={(e) => setColumn(e.target.value as ColumnId)}
+      >
+        <option value="todo">예정</option>
+        <option value="inProgress">진행 중</option>
+        <option value="done">완료</option>
+      </select>
+      <button type="submit" className="add-button">
+        추가
+      </button>
     </form>
   );
 };
 
 export default ScheduleForm;
+
+

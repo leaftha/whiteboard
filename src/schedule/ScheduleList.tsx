@@ -1,27 +1,60 @@
-import React from 'react';
-import { ScheduleItem } from './SchedulePage';
+import React from "react";
+import { useDroppable } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import ScheduleItem from "./ScheduleItem";
+import { ColumnId } from "./SchedulePage";
+import "./ScheduleList.css";
 
-interface ScheduleListProps {
-  schedules: ScheduleItem[];
+interface Task {
+  id: string;
+  content: string;
+  deadline?: string;
 }
 
-const ScheduleList: React.FC<ScheduleListProps> = ({ schedules }) => {
+interface ScheduleListProps {
+  columnId: ColumnId;
+  title: string;
+  tasks: Task[];
+  onDeleteTask: (taskId: string) => void;
+  onEditTask: (taskId: string, newContent: string) => void;
+}
+
+const ScheduleList: React.FC<ScheduleListProps> = ({
+  columnId,
+  title,
+  tasks,
+  onDeleteTask,
+  onEditTask,
+}) => {
+  const { setNodeRef, isOver } = useDroppable({
+    id: columnId,
+  });
+
   return (
-    <div>
-      <h2>일정 목록</h2>
-      {schedules.length === 0 ? (
-        <p>등록된 일정이 없습니다.</p>
+    <div
+      ref={setNodeRef}
+      className={`schedule-column ${isOver ? "droppable-over" : ""}`}
+      id={columnId}
+    >
+      <h2>{title}</h2>
+      {tasks.length === 0 ? (
+        <p className="empty-msg">할 일이 없습니다.</p>
       ) : (
-        <ul>
-          {schedules.map((item) => (
-            <li key={item.id}>
-              <strong>{item.title}</strong> - {item.date}
-            </li>
+        <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
+          {tasks.map((task) => (
+            <ScheduleItem
+              key={task.id}
+              task={task}
+              onDelete={() => onDeleteTask(task.id)}
+              onEdit={(newContent) => onEditTask(task.id, newContent)}
+            />
           ))}
-        </ul>
+        </SortableContext>
       )}
     </div>
   );
 };
 
 export default ScheduleList;
+
+

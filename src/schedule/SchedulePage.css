@@ -1,0 +1,146 @@
+/* 전체 레이아웃 */
+.schedule-container {
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  background-color: #f9fafb;
+  padding: 40px 20px;
+  color: #1f2937;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 110vh; /* 기존 100vh보다 10% 더 높게 설정 */
+}
+
+/* 제목 */
+.schedule-container h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* 메인 콘텐츠: 사이드바 + 컬럼 */
+.main-content {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  align-items: flex-start;
+}
+
+/* 사이드바 */
+.sidebar {
+  width: 280px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #1f2937;
+}
+
+/* 미니 캘린더 */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.calendar-grid .day-name {
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.calendar-grid .day {
+  background: #f3f4f6;
+  border-radius: 10px;
+  padding: 10px 0;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.calendar-grid .day:hover {
+  background-color: #e5e7eb;
+  transform: scale(1.05);
+}
+
+.calendar-grid .today {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 700;
+}
+
+/* 캘린더 헤더 */
+.calendar-grid .event-dot {
+  display: block;
+  margin: 4px auto 0;
+  width: 6px;
+  height: 6px;
+  background-color: #3b82f6; /* 파란색 */
+  border-radius: 50%; /* 완전한 원 */
+}
+
+
+/* 일정 컬럼 래퍼 */
+.columns {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+}
+
+/* 개별 컬럼 */
+.schedule-column {
+  flex: 1;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.schedule-column h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 20px;
+}
+
+/* 드래그 중 스타일 */
+.droppable-over {
+  border: 2px dashed #60a5fa;
+  background-color: #eff6ff;
+  transition: background 0.2s, border 0.2s;
+}
+
+/* 비어 있을 때 */
+.empty-msg {
+  color: #9ca3af;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* 스크롤바 스타일 */
+.schedule-column::-webkit-scrollbar {
+  width: 6px;
+}
+
+.schedule-column::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+
