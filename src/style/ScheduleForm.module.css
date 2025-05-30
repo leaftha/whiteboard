@@ -1,9 +1,10 @@
+/* ScheduleForm.module.css */
 .scheduleFormContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: auto;
-  margin-bottom: 48px;
+  height: auto; 
+  margin-bottom: 48px; 
   padding: 0 16px;
   box-sizing: border-box;
 }
@@ -43,11 +44,14 @@
   cursor: pointer;
   font-weight: 500;
   transition: background-color 0.3s ease;
+  box-sizing: border-box;
 }
 
 .scheduleForm button:hover {
   background-color: #357abd;
 }
+
+/* ScheduleItem.module.css */
 .scheduleItem {
   background-color: #fefefe;
   border: 1px solid #ddd;
@@ -95,4 +99,110 @@
 
 .deleteButton:hover {
   background-color: #f9d6d5;
+}
+
+/* ScheduleList.module.css */
+.scheduleList {
+  background-color: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  max-height: 500px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+:global(.scheduleList) h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.25rem;
+  color: #333;
+  text-align: center;
+}
+
+.scheduleButton {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.scheduleButtonAdd {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.scheduleButtonAdd:hover {
+  background-color: #2563eb;
+}
+
+.scheduleButtonEdit {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+.scheduleButtonEdit:hover {
+  background-color: #059669;
+}
+
+.scheduleButton:active {
+  transform: scale(0.97);
+}
+
+/* SchedulePage.module.css */
+.schedulePage {
+  padding: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.columnsContainer {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0px;
+}
+
+.column {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  flex: 1 1 300px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 400px;
+}
+
+.scheduleColumnTitle {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  color: #333;
+  text-align: center;
+  font-weight: 700;
+}
+
+.scheduleColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.scheduleColumn::-webkit-scrollbar {
+  width: 8px;
 }

@@ -1,5 +1,6 @@
+/* MiniCalendar.module.css */
 .miniCalendar {
-  font-family: "Pretendard", sans-serif;
+  font-family: 'Pretendard', sans-serif;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -19,7 +20,7 @@
   color: #374151;
 }
 
-.calendarHeader button {
+:global(.calendarHeader button) {
   background: none;
   border: none;
   font-size: 16px;
@@ -67,11 +68,11 @@
   background-color: #f3f4f6;
 }
 
-.dayCell.disabled {
+.disabled {
   color: #d1d5db;
 }
 
-.dayCell.today {
+.today {
   border: 2px solid #3b82f6;
   border-radius: 5px;
   font-weight: 700;

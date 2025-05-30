@@ -1,3 +1,5 @@
+/* ScheduleList.module.css */
+
 .taskCard {
   background-color: #ffffff;
   border: 1px solid #e5e7eb; /* light gray border */
@@ -48,48 +50,4 @@
 
 .taskDeleteBtn:hover {
   background-color: rgba(239, 68, 68, 0.1); /* light red hover */
-}
-.scheduleColumn {
-  flex: 1;
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-  display: flex;
-  flex-direction: column;
-  min-height: 420px;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.scheduleColumn h2 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 20px;
-}
-
-/* 드래그 중 스타일 */
-.droppableOver {
-  border: 2px dashed #60a5fa;
-  background-color: #eff6ff;
-  transition: background 0.2s, border 0.2s;
-}
-
-/* 비어 있을 때 */
-.emptyMsg {
-  color: #9ca3af;
-  font-size: 14px;
-  text-align: center;
-  margin-top: 40px;
-}
-
-/* 스크롤바 스타일 */
-.scheduleColumn::-webkit-scrollbar {
-  width: 6px;
-}
-
-.scheduleColumn::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
 }
