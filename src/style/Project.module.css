@@ -1,0 +1,83 @@
+/* Project.module.css */
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.projectName {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.inviteSection {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.inviteInput {
+  flex: 1;
+  padding: 12px 15px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease;
+}
+
+.inviteInput:focus {
+  border-color: #558bcf;
+  outline: none;
+}
+
+.inviteButton {
+  background-color: #558bcf;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.inviteButton:hover {
+  background-color: #4479bd;
+}
+
+.linkSection {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.link {
+  text-decoration: none;
+  font-weight: 600;
+  color: #558bcf;
+  border: 2px solid #558bcf;
+  padding: 10px 25px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.link:hover {
+  background-color: #558bcf;
+  color: white;
+}

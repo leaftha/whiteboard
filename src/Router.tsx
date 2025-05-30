@@ -8,8 +8,6 @@ import MyProject from "./components/Myproject";
 import SchedulePage from "./components/SchedulePage"; // 일정 관리 페이지
 
 import "./App.css";
-import "./index.css";
-
 const AppRouter: React.FC = () => {
   return (
     <Routes>
