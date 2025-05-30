@@ -19,7 +19,7 @@ const AppRouter: React.FC = () => {
       <Route path="/whiteboard/:roomId" element={<WhiteBoard />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/schedule" element={<SchedulePage />} />
+      <Route path="/schedule/:id" element={<SchedulePage />} />
     </Routes>
   );
 };

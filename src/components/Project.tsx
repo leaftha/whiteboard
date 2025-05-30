@@ -13,17 +13,24 @@ import { useParams } from "react-router-dom";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
 
-type ProjectType = {
+type Project = {
   id: string;
   roomId: string;
+  scheduleId: string;
   projectName: string;
+  users: string[];
+  maxMenber: number;
+  startDate: Date;
 };
-
 const Project = () => {
-  const [prj, setPrj] = useState<ProjectType>({
+  const [prj, setPrj] = useState<Project>({
     id: "",
     roomId: "",
+    scheduleId: "",
     projectName: "",
+    users: [],
+    maxMenber: 1,
+    startDate: new Date(),
   });
   const [name, setName] = useState<string>("");
   let { id } = useParams();
@@ -41,6 +48,10 @@ const Project = () => {
           id: querySnapshot.id,
           roomId: data.roomId,
           projectName: data.projectName,
+          users: data.users,
+          maxMenber: data.maxMenber,
+          startDate: data.startDate,
+          scheduleId: data.scheduleId,
         });
       } else {
         console.log("No such document!");
@@ -95,6 +106,7 @@ const Project = () => {
         </button>
       </div>
       <Link to={`/whiteboard/${prj.roomId}`}>화이트 보드</Link>
+      <Link to={`/schedule/${prj.scheduleId}`}>일정관리</Link>
     </div>
   );
 };
