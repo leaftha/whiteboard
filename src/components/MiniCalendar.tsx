@@ -11,8 +11,7 @@ import {
   addMonths,
   subMonths,
 } from "date-fns";
-import "./MiniCalendar.css";
-
+import style from "../style/MiniCalendar.module.css";
 interface MiniCalendarProps {
   tasks?: { id: string; content: string; deadline?: string }[];
 }
@@ -41,25 +40,34 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
     tasks.filter(
       (task) =>
         task.deadline &&
-        format(new Date(task.deadline), "yyyy-MM-dd") === format(date, "yyyy-MM-dd")
+        format(new Date(task.deadline), "yyyy-MM-dd") ===
+          format(date, "yyyy-MM-dd")
     );
 
   return (
-    <div className="mini-calendar">
-      <div className="calendar-header">
-        <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>◀</button>
-        <div className="current-month">{format(currentMonth, "yyyy년 M월")}</div>
-        <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>▶</button>
+    <div className={style.miniCalendar}>
+      <div className={style.calendarHeader}>
+        <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
+          ◀
+        </button>
+        <div className={style.currentMonth}>
+          {format(currentMonth, "yyyy년 M월")}
+        </div>
+        <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
+          ▶
+        </button>
       </div>
 
-      <div className="days-row">
+      <div className={style.daysRow}>
         {["일", "월", "화", "수", "목", "금", "토"].map((d) => (
-          <div key={d} className="day-name">{d}</div>
+          <div key={d} className={style.dayName}>
+            {d}
+          </div>
         ))}
       </div>
 
       {weeks.map((week, i) => (
-        <div key={i} className="week-row">
+        <div key={i} className={style.weekRow}>
           {week.map((day, j) => {
             const isCurrentMonth = isSameMonth(day, currentMonth);
             const isToday = isSameDay(day, new Date());
@@ -68,12 +76,14 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
             return (
               <div
                 key={j}
-                className={`day-cell 
-                  ${isCurrentMonth ? "current" : "disabled"}
-                  ${isToday ? "today" : ""}`}
+                className={[
+                  style.dayCell,
+                  isCurrentMonth ? style.current : style.disabled,
+                  isToday ? style.today : "",
+                ].join(" ")}
               >
-                <div className="day-number">{format(day, "d")}</div>
-                {hasTask && <div className="task-indicator" />}
+                <div className={style.dayNumber}>{format(day, "d")}</div>
+                {hasTask && <div className={style.taskIndicator} />}
               </div>
             );
           })}
@@ -84,4 +94,3 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
 };
 
 export default MiniCalendar;
-// MiniCalendar.tsx

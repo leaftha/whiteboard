@@ -1,0 +1,98 @@
+.scheduleFormContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  margin-bottom: 48px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.scheduleForm {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 620px;
+  flex-wrap: nowrap;
+}
+
+.scheduleForm input,
+.scheduleForm select,
+.scheduleForm button {
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-sizing: border-box;
+}
+
+.scheduleForm input:focus,
+.scheduleForm select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 6px rgba(74, 144, 226, 0.5);
+}
+
+.scheduleForm button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.scheduleForm button:hover {
+  background-color: #357abd;
+}
+.scheduleItem {
+  background-color: #fefefe;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.scheduleItem:hover {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #222;
+  word-break: break-word;
+  flex-grow: 1;
+}
+
+.dueDate {
+  font-size: 0.875rem;
+  color: #888;
+  margin-left: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.deleteButton:hover {
+  background-color: #f9d6d5;
+}

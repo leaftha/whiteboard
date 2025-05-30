@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ColumnId } from "./SchedulePage";
-import "./ScheduleForm.css";
+import style from "../style/ScheduleForm.module.css";
 
 interface ScheduleFormProps {
   onAddTask: (content: string, column: ColumnId, deadline?: string) => void;
@@ -22,7 +22,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ onAddTask }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="schedule-form">
+    <form onSubmit={handleSubmit} className={style.scheduleForm}>
       <input
         type="text"
         value={content}
@@ -43,7 +43,7 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ onAddTask }) => {
         <option value="inProgress">진행 중</option>
         <option value="done">완료</option>
       </select>
-      <button type="submit" className="add-button">
+      <button type="submit" className={style.addButton}>
         추가
       </button>
     </form>
@@ -51,5 +51,3 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ onAddTask }) => {
 };
 
 export default ScheduleForm;
-
-
