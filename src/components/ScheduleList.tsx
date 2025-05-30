@@ -1,9 +1,12 @@
 import React from "react";
 import { useDroppable } from "@dnd-kit/core";
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import ScheduleItem from "./ScheduleItem";
 import { ColumnId } from "./SchedulePage";
-import "./ScheduleList.css";
+import style from "../style/ScheduleList.module.css";
 
 interface Task {
   id: string;
@@ -33,14 +36,17 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
   return (
     <div
       ref={setNodeRef}
-      className={`schedule-column ${isOver ? "droppable-over" : ""}`}
+      className={`${style.scheduleColumn} ${isOver ? style.droppableOver : ""}`}
       id={columnId}
     >
       <h2>{title}</h2>
       {tasks.length === 0 ? (
         <p className="empty-msg">할 일이 없습니다.</p>
       ) : (
-        <SortableContext items={tasks.map((task) => task.id)} strategy={verticalListSortingStrategy}>
+        <SortableContext
+          items={tasks.map((task) => task.id)}
+          strategy={verticalListSortingStrategy}
+        >
           {tasks.map((task) => (
             <ScheduleItem
               key={task.id}
@@ -56,5 +62,3 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
 };
 
 export default ScheduleList;
-
-

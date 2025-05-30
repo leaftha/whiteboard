@@ -1,6 +1,6 @@
 /* 전체 레이아웃 */
-.schedule-container {
-  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+.scheduleContainer {
+  font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif;
   background-color: #f9fafb;
   padding: 40px 20px;
   color: #1f2937;
@@ -11,7 +11,7 @@
 }
 
 /* 제목 */
-.schedule-container h1 {
+.scheduleContainer h1 {
   text-align: center;
   margin-bottom: 40px;
   font-size: 32px;
@@ -20,7 +20,7 @@
 }
 
 /* 메인 콘텐츠: 사이드바 + 컬럼 */
-.main-content {
+.mainContent {
   display: flex;
   gap: 20px;
   width: 100%;
@@ -46,7 +46,7 @@
 }
 
 /* 미니 캘린더 */
-.calendar-grid {
+.calendarGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
@@ -54,12 +54,12 @@
   text-align: center;
 }
 
-.calendar-grid .day-name {
+.dayName {
   font-weight: 600;
   color: #6b7280;
 }
 
-.calendar-grid .day {
+.day {
   background: #f3f4f6;
   border-radius: 10px;
   padding: 10px 0;
@@ -68,27 +68,26 @@
   transition: background 0.2s, transform 0.1s;
 }
 
-.calendar-grid .day:hover {
+.day:hover {
   background-color: #e5e7eb;
   transform: scale(1.05);
 }
 
-.calendar-grid .today {
+.today {
   background-color: #3b82f6;
   color: white;
   font-weight: 700;
 }
 
-/* 캘린더 헤더 */
-.calendar-grid .event-dot {
+/* 이벤트 도트 */
+.eventDot {
   display: block;
   margin: 4px auto 0;
   width: 6px;
   height: 6px;
   background-color: #3b82f6; /* 파란색 */
-  border-radius: 50%; /* 완전한 원 */
+  border-radius: 50%;
 }
-
 
 /* 일정 컬럼 래퍼 */
 .columns {
@@ -98,7 +97,7 @@
 }
 
 /* 개별 컬럼 */
-.schedule-column {
+.scheduleColumn {
   flex: 1;
   background: #ffffff;
   padding: 20px;
@@ -111,7 +110,7 @@
   overflow-y: auto;
 }
 
-.schedule-column h2 {
+.scheduleColumn h2 {
   font-size: 18px;
   font-weight: 600;
   color: #111827;
@@ -119,14 +118,14 @@
 }
 
 /* 드래그 중 스타일 */
-.droppable-over {
+.droppableOver {
   border: 2px dashed #60a5fa;
   background-color: #eff6ff;
   transition: background 0.2s, border 0.2s;
 }
 
 /* 비어 있을 때 */
-.empty-msg {
+.emptyMsg {
   color: #9ca3af;
   font-size: 14px;
   text-align: center;
@@ -134,13 +133,11 @@
 }
 
 /* 스크롤바 스타일 */
-.schedule-column::-webkit-scrollbar {
+.scheduleColumn::-webkit-scrollbar {
   width: 6px;
 }
 
-.schedule-column::-webkit-scrollbar-thumb {
+.scheduleColumn::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 3px;
 }
-
-

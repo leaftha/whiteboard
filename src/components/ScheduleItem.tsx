@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from "react";
 import { useDraggable } from "@dnd-kit/core";
-import "./ScheduleItem.css";
+import style from "../style/ScheduleItem.module.css";
 
 interface Task {
   id: string;
@@ -27,11 +26,12 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({
     setEditContent(task.content);
   }, [task.content]);
 
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
-    id: task.id,
-  });
+  const { attributes, listeners, setNodeRef, transform, isDragging } =
+    useDraggable({
+      id: task.id,
+    });
 
-  const style: React.CSSProperties = {
+  const styleReact: React.CSSProperties = {
     transform: transform
       ? `translate(${transform.x}px, ${transform.y}px)`
       : undefined,
@@ -48,17 +48,18 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({
   };
 
   return (
-    <div ref={setNodeRef} style={style} className="task-item">
+    <div ref={setNodeRef} style={styleReact} className={style.taskItem}>
       {isEditing ? (
-        <div className="edit-form">
+        <div className={style.editForm}>
           <input
             type="text"
             value={editContent}
             onChange={(e) => setEditContent(e.target.value)}
+            className={style.editInput}
             autoFocus
           />
           <button
-            className="icon-small-button save"
+            className={`${style.iconSmallButton} ${style.save}`}
             onClick={handleSave}
             aria-label="저장"
             title="저장"
@@ -67,7 +68,7 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({
             💾
           </button>
           <button
-            className="icon-small-button cancel"
+            className={`${style.iconSmallButton} ${style.cancel}`}
             onClick={() => setIsEditing(false)}
             aria-label="취소"
             title="취소"
@@ -78,21 +79,21 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({
         </div>
       ) : (
         <>
-          {/* 왼쪽: 드래그 핸들 및 내용 */}
           <div
-            className="task-left"
+            className={style.taskLeft}
             {...listeners}
             {...attributes}
             style={{ cursor: "grab" }}
           >
-            <div className="task-content">{task.content}</div>
-            {task.deadline && <div className="task-deadline">{task.deadline}</div>}
+            <div className={style.taskContent}>{task.content}</div>
+            {task.deadline && (
+              <div className={style.taskDeadline}>{task.deadline}</div>
+            )}
           </div>
 
-          {/* 오른쪽: 수정 / 삭제 버튼 */}
-          <div className="task-actions">
+          <div className={style.taskActions}>
             <button
-              className="icon-button edit-button"
+              className={`${style.iconButton} ${style.editButton}`}
               onClick={(e) => {
                 e.stopPropagation();
                 setIsEditing(true);
@@ -104,7 +105,7 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({
               ✏️
             </button>
             <button
-              className="icon-button delete-button"
+              className={`${style.iconButton} ${style.deleteButton}`}
               onClick={(e) => {
                 e.stopPropagation();
                 onDelete();
@@ -123,7 +124,3 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({
 };
 
 export default ScheduleItem;
-
-
-
-

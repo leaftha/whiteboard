@@ -1,11 +1,11 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import WhiteBoard from "./components/whiteboard";
 import Main from "./components/main";
 import Project from "./components/Project";
 import Login from "./components/Login";
 import SignUp from "./components/signup";
 import MyProject from "./components/Myproject";
-import SchedulePage from "./schedule/SchedulePage"; // 일정 관리 페이지
+import SchedulePage from "./components/SchedulePage"; // 일정 관리 페이지
 
 import "./App.css";
 import "./index.css";

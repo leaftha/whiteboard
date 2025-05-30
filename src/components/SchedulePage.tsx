@@ -21,7 +21,7 @@ import ScheduleForm from "./ScheduleForm";
 import ScheduleItem from "./ScheduleItem";
 import MiniCalendar from "./MiniCalendar";
 
-import "./SchedulePage.css";
+import style from "../style/SchedulePage.module.css";
 
 export type ColumnId = "todo" | "inProgress" | "done";
 
@@ -46,7 +46,10 @@ const SchedulePage: React.FC = () => {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [activeColumn, setActiveColumn] = useState<ColumnId | null>(null);
 
-  const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor));
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor)
+  );
 
   const clearDragState = (taskId?: string) => {
     if (!taskId || taskId === activeId) {
@@ -158,18 +161,18 @@ const SchedulePage: React.FC = () => {
       : null;
 
   return (
-    <div className="schedule-container">
+    <div className={style.scheduleContainer}>
       <h1>📅 일정 관리 보드</h1>
       <ScheduleForm onAddTask={handleAddTask} />
-      <div className="main-content">
+      <div className={style.mainContent}>
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
         >
-          <div className="columns">
-            {(["todo", "inProgress", "done"] as ColumnId[]).map((columnId) => (
+          <div className={style.columns}>
+            {(["todo", "inProgress", "done"] as const).map((columnId) => (
               <SortableContext
                 key={columnId}
                 items={tasks[columnId].map((task) => task.id)}
@@ -205,7 +208,7 @@ const SchedulePage: React.FC = () => {
           </DragOverlay>
         </DndContext>
 
-        <aside className="sidebar">
+        <aside className={style.sidebar}>
           <MiniCalendar
             tasks={[...tasks.todo, ...tasks.inProgress, ...tasks.done]}
           />
@@ -216,4 +219,3 @@ const SchedulePage: React.FC = () => {
 };
 
 export default SchedulePage;
-
