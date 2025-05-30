@@ -13,6 +13,10 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ onAddTask }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (deadline === "") {
+      alert("마감일을 입력하세요");
+      return;
+    }
     if (content.trim()) {
       onAddTask(content, column, deadline);
       setContent("");
