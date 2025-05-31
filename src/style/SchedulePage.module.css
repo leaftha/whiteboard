@@ -1,5 +1,5 @@
 .scheduleContainer {
-  font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+  font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif;
   background-color: #f9fafb;
   padding: 40px 20px;
   color: #1f2937;
@@ -9,8 +9,7 @@
   min-height: 110vh; /* 기존 100vh보다 10% 더 높게 설정 */
 }
 
-/* h1은 전역 스타일이라 :global로 처리 */
-:global(.scheduleContainer) h1 {
+.scheduleContainer h1 {
   text-align: center;
   margin-bottom: 40px;
   font-size: 32px;
@@ -34,7 +33,7 @@
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
 }
 
-:global(.sidebar) h2 {
+.sidebar h2 {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 20px;
@@ -51,12 +50,12 @@
   text-align: center;
 }
 
-:global(.calendarGrid) .dayName {
+.calendarGrid .dayName {
   font-weight: 600;
   color: #6b7280;
 }
 
-:global(.calendarGrid) .day {
+.calendarGrid .day {
   background: #f3f4f6;
   border-radius: 10px;
   padding: 10px 0;
@@ -65,18 +64,18 @@
   transition: background 0.2s, transform 0.1s;
 }
 
-:global(.calendarGrid) .day:hover {
+.calendarGrid .day:hover {
   background-color: #e5e7eb;
   transform: scale(1.05);
 }
 
-:global(.calendarGrid) .today {
+.calendarGrid .today {
   background-color: #3b82f6;
   color: white;
   font-weight: 700;
 }
 
-:global(.calendarGrid) .eventDot {
+.calendarGrid .eventDot {
   display: block;
   margin: 4px auto 0;
   width: 6px;
@@ -105,7 +104,7 @@
   overflow-y: auto;
 }
 
-:global(.scheduleColumn) h2 {
+.scheduleColumn h2 {
   font-size: 18px;
   font-weight: 600;
   color: #111827;
