@@ -41,7 +41,7 @@ const ScheduleList: React.FC<ScheduleListProps> = ({
     >
       <h2>{title}</h2>
       {tasks.length === 0 ? (
-        <p className="empty-msg">할 일이 없습니다.</p>
+        <p className={style.emptyMsg}>할 일이 없습니다.</p>
       ) : (
         <SortableContext
           items={tasks.map((task) => task.id)}
