@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import AddProject from "./Addproject";
@@ -46,6 +46,8 @@ const MyProject = () => {
                 roomId: data.roomId,
                 projectName: data.projectName,
                 users: data.users,
+                startDate: data.startDate,
+                maxMenber: data.maxMenber,
               } as Project;
             }
             return null;
@@ -68,6 +70,7 @@ const MyProject = () => {
   const handleClick = (project: Project) => {
     navigate(`/project/${project.id}`);
   };
+
   return (
     <div className={style.main}>
       <div className={style.titleContainer}>
@@ -94,7 +97,18 @@ const MyProject = () => {
               }}
             >
               <h1>{project.projectName || "제목 없음"}</h1>
-              <p>인원수 : {project.users.length}</p>
+              <p>
+                인원수 : {project.users.length} / {project.maxMenber}
+              </p>
+              <p>
+                프로젝트 시작일 :
+                {project.startDate
+                  ? (project.startDate instanceof Timestamp
+                      ? project.startDate.toDate()
+                      : project.startDate
+                    ).toLocaleDateString()
+                  : "시작일 없음"}
+              </p>
             </div>
           ))}
         </div>

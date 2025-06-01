@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Gothic+A1&family=Jua&family=Noto+Serif+KR:wght@200..900&display=swap");
+
 .main {
   display: flex;
   flex-direction: column;
@@ -6,6 +8,7 @@
 .titleContainer {
   padding: 100px 0;
   text-align: center;
+  font-family: "Gothic A1", sans-serif;
 }
 .titleContainer h1 {
   font-size: 60px;
@@ -30,6 +33,7 @@
 }
 .modalBtn {
   background: none;
+  font-family: "Gothic A1", sans-serif;
   color: #111111;
   border: none;
   padding: 0.5rem 1rem;
@@ -52,26 +56,46 @@
 .modalBtn:hover::after {
   width: 60px;
 }
-
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+  padding: 24px;
 }
 
 .gridItem {
+  font-family: "Noto Serif KR", serif;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 200px;
-  border: 1px solid #111111;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
+  gap: 12px;
 }
 
 .gridItem:hover {
-  box-shadow: 0 0 0 5px #558bcf;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(85, 139, 207, 0.3);
+  border-color: #558bcf;
+}
+
+.gridItem h1 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  text-align: center;
+}
+
+.gridItem p {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0;
+  text-align: center;
+  line-height: 1.4;
 }
