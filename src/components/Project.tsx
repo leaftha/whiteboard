@@ -1,3 +1,4 @@
+import React, { useEffect, useRef, useState } from "react";
 import {
   collection,
   doc,
@@ -8,11 +9,9 @@ import {
   updateDoc,
   arrayUnion,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { db } from "../firebase";
-import { Link } from "react-router-dom";
-
+import styles from "../style/Project.module.css";
 type Project = {
   id: string;
   roomId: string;
@@ -32,7 +31,8 @@ const Project = () => {
     maxMenber: 1,
     startDate: new Date(),
   });
-  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [success, setSuccess] = useState(false);
   let { id } = useParams();
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const Project = () => {
     loadPrj();
   }, [id]);
 
-  const invite = async (email: string) => {
+  const invite = async () => {
     try {
       if (!id) return;
       const usersRef = collection(db, "users");
@@ -82,31 +82,50 @@ const Project = () => {
           users: arrayUnion(userDoc.id),
         });
       }
+      setSuccess(true);
     } catch (error) {
       console.error("유저를 찾는 중 에러:", error);
     }
   };
-
   return (
-    <div>
-      <h1>Project</h1>
-      <h1>{prj?.projectName}</h1>
-      <div>
-        <input
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        />
-        <button
-          onClick={() => {
-            invite(name);
-          }}
-        >
-          초대
-        </button>
+    <div className={styles.main}>
+      <div className={styles.container}>
+        <h2 className={styles.projectName}>
+          {prj.projectName
+            ? `${prj.projectName}에 함께 참여해보세요!`
+            : "프로젝트 정보를 불러오는 중..."}
+        </h2>
+        <h1 className={styles.title}>프로젝트 초대</h1>
+
+        <div className={styles.inviteSection}>
+          <input
+            className={styles.inviteInput}
+            placeholder="초대할 이메일 입력"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            aria-label="초대할 이메일 입력"
+            type="email"
+          />
+          <button
+            className={styles.inviteButton}
+            onClick={invite}
+            aria-label="초대하기"
+          >
+            초대
+          </button>
+        </div>
+
+        {success && <p className={styles.success}>초대완료!</p>}
+
+        <div className={styles.linkSection}>
+          <Link className={styles.link} to={`/whiteboard/${prj.roomId}`}>
+            🧑‍🎨 화이트보드
+          </Link>
+          <Link className={styles.link} to={`/schedule/${prj.scheduleId}`}>
+            📅 일정관리
+          </Link>
+        </div>
       </div>
-      <Link to={`/whiteboard/${prj.roomId}`}>화이트 보드</Link>
-      <Link to={`/schedule/${prj.scheduleId}`}>일정관리</Link>
     </div>
   );
 };
