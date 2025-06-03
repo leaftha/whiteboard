@@ -72,54 +72,56 @@ const MyProject = () => {
   };
 
   return (
-    <div className={style.main}>
-      <div className={style.titleContainer}>
-        <h1>프로젝트</h1>
-      </div>
-      <div className={style.modalContainer}>
-        <button
-          className={style.modalBtn}
-          onClick={() => {
-            setIsMadal(!isModal);
-          }}
-        >
-          추가
-        </button>
-      </div>
+    <>
       {loadTime ? (
-        <div className={style.grid}>
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className={style.gridItem}
+        <div className={style.main}>
+          <div className={style.titleContainer}>
+            <h1>프로젝트</h1>
+          </div>
+          <div className={style.modalContainer}>
+            <button
+              className={style.modalBtn}
               onClick={() => {
-                handleClick(project);
+                setIsMadal(!isModal);
               }}
             >
-              <h1>{project.projectName || "제목 없음"}</h1>
-              <p>
-                인원수 : {project.users.length} / {project.maxMenber}
-              </p>
-              <p>
-                프로젝트 시작일 :
-                {project.startDate
-                  ? (project.startDate instanceof Timestamp
-                      ? project.startDate.toDate()
-                      : project.startDate
-                    ).toLocaleDateString()
-                  : "시작일 없음"}
-              </p>
-            </div>
-          ))}
+              추가
+            </button>
+          </div>
+          <div className={style.grid}>
+            {projects.map((project) => (
+              <div
+                key={project.id}
+                className={style.gridItem}
+                onClick={() => {
+                  handleClick(project);
+                }}
+              >
+                <h1>{project.projectName || "제목 없음"}</h1>
+                <p>
+                  인원수 : {project.users.length} / {project.maxMenber}
+                </p>
+                <p>
+                  프로젝트 시작일 :
+                  {project.startDate
+                    ? (project.startDate instanceof Timestamp
+                        ? project.startDate.toDate()
+                        : project.startDate
+                      ).toLocaleDateString()
+                    : "시작일 없음"}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {isModal && (
+            <AddProject setProjects={setProjects} setIsMadal={setIsMadal} />
+          )}
         </div>
       ) : (
         <Loading />
       )}
-
-      {isModal && (
-        <AddProject setProjects={setProjects} setIsMadal={setIsMadal} />
-      )}
-    </div>
+    </>
   );
 };
 
