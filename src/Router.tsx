@@ -10,6 +10,7 @@ import SchedulePage from "./components/SchedulePage"; // 일정 관리 페이지
 import "./App.css";
 import "./index.css";
 
+import "./App.css";
 const AppRouter: React.FC = () => {
   return (
     <Routes>

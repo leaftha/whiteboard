@@ -75,7 +75,7 @@
   overflow-y: auto;
 }
 
-.scheduleColumn h2 {
+:global(.scheduleColumn) h2 {
   font-size: 18px;
   font-weight: 600;
   color: #111827;
