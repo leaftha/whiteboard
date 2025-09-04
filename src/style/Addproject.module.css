@@ -1,26 +1,34 @@
+/* Addproject.module.css */
 .main {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 9999;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .formContainer {
   background-color: #fff;
   width: 500px;
   max-width: 90%;
+  min-height: auto;
   padding: 2rem;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  max-height: 80vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  margin: auto;
 }
 
 .formContent {
@@ -40,14 +48,35 @@
   width: 100px;
   font-weight: 600;
   text-align: right;
+  flex-shrink: 0;
 }
 
 .inpuBox input {
   flex: 1;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
   border-radius: 6px;
   font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.inpuBox input:focus {
+  border-color: #558bcf;
+  box-shadow: 0 0 0 3px rgba(85, 139, 207, 0.1);
+}
+
+.inpuBox input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.inpuBox input[type="number"]::-webkit-outer-spin-button,
+.inpuBox input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
 }
 
 .buttonBox {
@@ -62,11 +91,57 @@
   border: none;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
+  font-weight: 600;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  min-width: 160px;
 }
 
 .buttonBox button:hover {
   background-color: #3f6cad;
+  transform: translateY(-1px);
+}
+
+.buttonBox button:active {
+  transform: translateY(0);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 640px) {
+  .main {
+    padding: 16px;
+  }
+
+  .formContainer {
+    width: 100%;
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+
+  .inpuBox {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .inpuBox label {
+    width: auto;
+    text-align: left;
+    font-size: 0.9rem;
+  }
+
+  .inpuBox input {
+    padding: 0.75rem;
+    font-size: 16px; /* iOS에서 줌 방지 */
+  }
+
+  .buttonBox button {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .formContent {
+    gap: 1.25rem;
+  }
 }

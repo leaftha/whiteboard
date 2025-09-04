@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css2?family=Gothic+A1&family=Noto+Serif+KR:wght@200..900&display=swap");
+
+.titleSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 40px;
+  gap: 50px;
+  box-sizing: border-box;
+}
+
+.leftContent {
+  flex: 1.4;
+}
+
+.rightImage {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.title {
+  font-family: "Gothic A1", sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 36px);
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.description {
+  font-family: "Noto Serif KR", serif;
+  font-size: clamp(14px, 1.5vw, 16px);
+  line-height: 1.6;
+  color: #555;
+  margin: 8px 0;
+}
+
+.buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.primaryBtn,
+.secondaryBtn {
+  font-family: "Gothic A1", sans-serif;
+  font-weight: bold;
+  padding: 12px 28px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.primaryBtn {
+  background-color: #558bcf;
+  color: #fff;
+}
+
+.primaryBtn:hover {
+  background-color: #4479bd;
+}
+
+.secondaryBtn {
+  background-color: #ebf5fe;
+  color: #558bcf;
+}
+
+.secondaryBtn:hover {
+  background-color: #d6eafd;
+}
+
+.image {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* 반응형 */
+@media (max-width: 1280px) {
+  .titleSection {
+    padding: 50px 30px;
+  }
+
+  .image {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .titleSection {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .rightImage {
+    justify-content: center;
+    margin-top: 25px;
+  }
+
+  .image {
+    max-width: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: clamp(24px, 5vw, 32px);
+  }
+
+  .description {
+    font-size: clamp(13px, 2.5vw, 16px);
+  }
+
+  .buttons {
+    justify-content: center;
+  }
+}

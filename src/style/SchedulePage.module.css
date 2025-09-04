@@ -25,6 +25,7 @@
   align-items: flex-start;
 }
 
+/* 사이드바 */
 .sidebar {
   width: 280px;
   background: #ffffff;
@@ -91,6 +92,7 @@
   flex: 1;
 }
 
+/* 투두리스트 / 일정 카드 */
 .scheduleColumn {
   flex: 1;
   background: #ffffff;
@@ -111,12 +113,76 @@
   margin-bottom: 20px;
 }
 
+/* 카드형 투두리스트 아이템 */
+.todoCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 22px;
+  border-radius: 16px;
+  background-color: #fdfdfd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 16px;
+  transition: 0.3s;
+}
+
+.todoCard:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.todoLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.todoTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #1f2937;
+}
+
+.todoTime {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* 완료 버튼 */
+.todoRight {
+  display: flex;
+  align-items: center;
+}
+
+.completeBtn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 10px;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.completeBtn:hover {
+  background-color: #2563eb;
+}
+
+/* 오늘 날짜 강조 */
+.today {
+  border-left: 4px solid #ff6b6b;
+  padding-left: 16px;
+}
+
+/* 드래그 오버 */
 .droppableOver {
   border: 2px dashed #60a5fa;
   background-color: #eff6ff;
   transition: background 0.2s, border 0.2s;
 }
 
+/* 비어있는 상태 메시지 */
 .emptyMsg {
   color: #9ca3af;
   font-size: 14px;
@@ -132,4 +198,21 @@
 .scheduleColumn::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 3px;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .mainContent {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .todoCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .todoRight {
+    margin-top: 10px;
+  }
 }

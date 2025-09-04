@@ -1,47 +1,73 @@
+/* 기존 스타일 개선 버전 */
 .main {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100vh;
+  background-color: #f8f9fa;
 }
-.title {
-  margin: 0 auto;
-  font-size: 50px;
-  padding-top: 50px;
-}
+
 .body {
   display: flex;
   background-color: #ffffff;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
-  width: 50%;
-  height: 50%;
-  border: 1px solid #111111;
+  padding: 40px;
+  width: 600px;
+  height: 600px;
+  border: 1px solid #dee2e6;
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.title {
+  margin: 0;
+  font-size: 48px;
+  font-weight: bold;
+  color: #212529;
+  text-align: center;
+}
+
+.description {
+  margin: 20px 0;
+  font-size: 18px;
+  color: #6c757d;
+  text-align: center;
 }
 
 .form {
   display: flex;
   align-items: center;
-  height: 80%;
+  width: 100%;
   justify-content: space-around;
   flex-direction: column;
+  gap: 25px;
 }
+
 .formInput {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  gap: 15px;
 }
 
 .form input {
-  border: none;
-  font-size: 20px;
-  margin: 10px 0;
-  padding: 5px;
-  background: #e9ecef;
+  border: 1px solid #ced4da;
+  font-size: 18px;
+  margin: 0;
+  padding: 12px 15px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  outline: none;
+}
+
+.form input:focus {
+  border-color: #558bcf;
+  background: #ffffff;
+  box-shadow: 0 0 0 0.2rem rgba(85, 139, 207, 0.25);
 }
 
 .form button {
@@ -49,30 +75,40 @@
   border: 1px solid #558bcf;
   background-color: #558bcf;
   color: #ffffff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
-  padding: 12px 45px;
+  padding: 15px 50px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  transition: transform 80ms ease-in;
+  transition: all 0.2s ease;
   cursor: pointer;
+  width: 100%;
+  max-width: 300px;
 }
+
+.form button:hover {
+  background-color: #4e7db8;
+  border-color: #4e7db8;
+  transform: translateY(-1px);
+}
+
 .form button:active {
   transform: scale(0.95);
 }
 
-.description {
-  margin: 0 auto;
-  font-size: 20px;
-}
-
 .link {
-  background-color: none;
+  background: none;
   color: #558bcf;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
-  padding: 2px 25px;
+  padding: 10px 25px;
   letter-spacing: 1px;
   cursor: pointer;
   text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #4e7db8;
+  text-decoration: underline;
 }
