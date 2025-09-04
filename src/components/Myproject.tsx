@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, Timestamp } from "firebase/firestore";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import AddProject from "./Addproject";
@@ -44,14 +44,11 @@ const MyProject: React.FC = () => {
               const data = projectDocSnap.data();
               return {
                 id: projectDocSnap.id,
-                roomId: data.roomId || "",
-                scheduleId: data.scheduleId || "",
-                projectName: data.projectName || "",
-                users: data.users || [],
-                maxMenber: data.maxMenber || 1,
-                startDate: data.startDate
-                  ? new Date(data.startDate.seconds * 1000)
-                  : new Date(),
+                roomId: data.roomId,
+                projectName: data.projectName,
+                users: data.users,
+                startDate: data.startDate,
+                maxMenber: data.maxMenber,
               } as Project;
             }
             return null;
@@ -76,74 +73,57 @@ const MyProject: React.FC = () => {
     navigate(`/project/${project.id}`);
   };
 
-  // 프로젝트를 좌우 2열로 나누기
-  const mid = Math.ceil(projects.length / 2);
-  const leftProjects = projects.slice(0, mid);
-  const rightProjects = projects.slice(mid);
-
   return (
-    <div className={style.main}>
-      {/* 타이틀 섹션 */}
-      <div className={style.titleSection}>
-        <div className={style.titleText}>
-          <h1>협업을 위한 길</h1>
-          <p>답답한 프로그램에서 벗어나 웹에서의 회의</p>
-          <p>화상만이 아닌 협업 화이트 보드를 활용한 회의</p>
-        </div>
-
-        {/* 버튼 3개 가로 정렬 */}
-        <div className={style.titleButtons}>
-          <button className={style.modalBtn} onClick={() => logout && logout()}>
-            로그아웃
-          </button>
-          <button className={style.modalBtn}>프로젝트들</button>
-          <button
-            className={style.modalBtn}
-            onClick={() => setIsModal(!isModal)}
-          >
-            추가
-          </button>
-        </div>
-      </div>
-
-      {/* 프로젝트 목록 */}
-      <h2 className={style.featureTitle}>프로젝트 목록</h2>
+    <>
       {loadTime ? (
-        <div className={style.featureColumns}>
-          <div className={style.featureColumn}>
-            {leftProjects.map((project) => (
+        <div className={style.main}>
+          <div className={style.titleContainer}>
+            <h1>프로젝트</h1>
+          </div>
+          <div className={style.modalContainer}>
+            <button
+              className={style.modalBtn}
+              onClick={() => {
+                setIsMadal(!isModal);
+              }}
+            >
+              추가
+            </button>
+          </div>
+          <div className={style.grid}>
+            {projects.map((project) => (
               <div
                 key={project.id}
-                className={style.featureItem}
-                onClick={() => handleClick(project)}
+                className={style.gridItem}
+                onClick={() => {
+                  handleClick(project);
+                }}
               >
-                <h3>{project.projectName || "제목 없음"}</h3>
-                <p>인원수: {project.users.length}</p>
+                <h1>{project.projectName || "제목 없음"}</h1>
+                <p>
+                  인원수 : {project.users.length} / {project.maxMenber}
+                </p>
+                <p>
+                  프로젝트 시작일 :
+                  {project.startDate
+                    ? (project.startDate instanceof Timestamp
+                        ? project.startDate.toDate()
+                        : project.startDate
+                      ).toLocaleDateString()
+                    : "시작일 없음"}
+                </p>
               </div>
             ))}
           </div>
-          <div className={style.featureColumn}>
-            {rightProjects.map((project) => (
-              <div
-                key={project.id}
-                className={style.featureItem}
-                onClick={() => handleClick(project)}
-              >
-                <h3>{project.projectName || "제목 없음"}</h3>
-                <p>인원수: {project.users.length}</p>
-              </div>
-            ))}
-          </div>
+
+          {isModal && (
+            <AddProject setProjects={setProjects} setIsMadal={setIsMadal} />
+          )}
         </div>
       ) : (
         <Loading />
       )}
-
-      {/* 모달 */}
-      {isModal && (
-        <AddProject setProjects={setProjects} setIsModal={setIsModal} />
-      )}
-    </div>
+    </>
   );
 };
 

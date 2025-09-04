@@ -1,83 +1,236 @@
-/* Project.module.css */
-.container {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  font-family: 'Noto Sans KR', sans-serif;
-  background: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.main {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
 }
 
+/* 기본 컨테이너 */
+.container {
+  width: 60%;
+  height: 30%;
+  margin: 0 auto;
+  padding: 48px 24px;
+  background-color: #ffffff;
+  color: #1e293b;
+  font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* 제목 및 부제 */
 .title {
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 700;
-  color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
   text-align: center;
+  color: #1d4ed8;
+  opacity: 0;
+  animation: fadeSlideDown 0.6s ease-out forwards;
+}
+.title.show {
+  opacity: 1;
 }
 
 .projectName {
-  font-size: 1.6rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  color: #555;
-  margin-bottom: 30px;
+  margin-bottom: 2.5rem;
   text-align: center;
+  color: #475569;
+  opacity: 0;
+  animation: fadeSlideDown 0.6s ease-out forwards;
+  animation-delay: 0.1s;
+}
+.projectName.show {
+  opacity: 1;
 }
 
+/* 초대 입력 및 버튼 섹션 */
 .inviteSection {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 12px;
-  margin-bottom: 30px;
+  margin-bottom: 2.5rem;
 }
 
+@media (min-width: 640px) {
+  .inviteSection {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* 이메일 입력창 */
 .inviteInput {
-  flex: 1;
-  padding: 12px 15px;
+  width: 50%;
+  max-width: 100%;
+  padding: 12px 16px;
   font-size: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  transition: border-color 0.3s ease;
-}
-
-.inviteInput:focus {
-  border-color: #558bcf;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background-color: #f8fafc;
   outline: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+.inviteInput:focus {
+  border-color: #3b82f6;
 }
 
+/* 초대 버튼 */
 .inviteButton {
-  background-color: #558bcf;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background-color: #2563eb;
   color: white;
   border: none;
-  border-radius: 8px;
-  padding: 12px 25px;
-  font-size: 1rem;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  height: 32px;
+  line-height: 24px;
+  box-sizing: border-box;
 }
-
 .inviteButton:hover {
-  background-color: #4479bd;
+  background-color: #1e40af;
+  transform: translateY(-1px);
+}
+.inviteButton:active {
+  background-color: #1e3a8a;
+  transform: scale(0.98);
 }
 
+/* 에러 메시지 */
+.error {
+  color: #ef4444;
+  background-color: #fee2e2;
+  border: 1px solid #f87171;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  text-align: center;
+  box-shadow: 0 1px 5px rgba(239, 68, 68, 0.3);
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* 성공 메시지 */
+.success {
+  color: #22c55e;
+  background-color: #dcfce7;
+  border: 1px solid #4ade80;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  text-align: center;
+  box-shadow: 0 1px 5px rgba(34, 197, 94, 0.3);
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* 메시지 애니메이션 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 링크 버튼 그룹 */
 .linkSection {
   display: flex;
-  justify-content: center;
-  gap: 30px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  margin-top: 1.5rem;
 }
 
+@media (min-width: 640px) {
+  .linkSection {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+/* 링크 버튼 */
 .link {
-  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #558bcf;
-  border: 2px solid #558bcf;
-  padding: 10px 25px;
+  text-align: center;
+  min-height: 64px;
+  background-color: #eff6ff;
+  color: #1d4ed8;
   border-radius: 10px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+.link:hover {
+  background-color: #dbeafe;
+}
+.link:active {
+  transform: scale(0.98);
 }
 
-.link:hover {
-  background-color: #558bcf;
-  color: white;
+/* 제목 및 부제 애니메이션 */
+@keyframes fadeSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 다크 모드 */
+@media (prefers-color-scheme: dark) {
+  .container {
+    background-color: #1e293b;
+    color: #f1f5f9;
+  }
+
+  .inviteInput {
+    background-color: #334155;
+    color: #f8fafc;
+    border-color: #475569;
+  }
+
+  .inviteButton {
+    background-color: #3b82f6;
+    color: #f8fafc;
+  }
+
+  .inviteButton:hover {
+    background-color: #2563eb;
+  }
+
+  .link {
+    background-color: #334155;
+    color: #93c5fd;
+  }
+
+  .link:hover {
+    background-color: #475569;
+  }
 }

@@ -64,13 +64,15 @@ const Main: React.FC = () => {
           <article className={style.descriptionGridItem}>
             <img
               className={style.descriptionImg}
-              src="image/descriptionImg3.gif"
-              alt="일정 관리"
+              src="image/descriptionImg4.gif"
+              alt="main img"
             />
             <div className={style.description}>
-              <h1>일정관리 시스템</h1>
+              <h1>프로젝트 팀원 초대</h1>
               <p>
-                프로젝트 일정 추가 및 관리, 팀원과 실시간 공유가 가능합니다.
+                프로젝트에 함께할 팀원을 이메일로 초대하세요. <br />
+                초대한 사용자는 자동으로 프로젝트 목록에 추가되며, 협업이 즉시
+                시작됩니다.
               </p>
             </div>
           </article>

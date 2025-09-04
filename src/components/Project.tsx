@@ -1,3 +1,4 @@
+import React, { useEffect, useRef, useState } from "react";
 import {
   collection,
   doc,
@@ -8,12 +9,10 @@ import {
   updateDoc,
   arrayUnion,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { db } from "../firebase";
-import style from "../style/Project.module.css";
-
-type ProjectType = {
+import styles from "../style/Project.module.css";
+type Project = {
   id: string;
   roomId: string;
   scheduleId: string;
@@ -33,7 +32,8 @@ const Project: React.FC = () => {
     maxMenber: 1,
     startDate: new Date(),
   });
-  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [success, setSuccess] = useState(false);
   let { id } = useParams();
 
   useEffect(() => {
@@ -62,18 +62,17 @@ const Project: React.FC = () => {
     loadPrj();
   }, [id]);
 
-  const invite = async (email: string) => {
+  const invite = async () => {
     try {
       if (!id) return;
       const usersRef = collection(db, "users");
       const q = query(usersRef, where("email", "==", email));
       const querySnapshot = await getDocs(q);
-
       if (querySnapshot.empty) {
         console.log("해당 이메일을 가진 유저가 없습니다.");
         return;
       }
-      const prjDocRef = doc(db, "projects", id);
+      const prjDocRef = doc(db, "project", id);
       for (const userDoc of querySnapshot.docs) {
         const userRef = doc(db, "users", userDoc.id);
         await updateDoc(userRef, {
@@ -83,34 +82,49 @@ const Project: React.FC = () => {
           users: arrayUnion(userDoc.id),
         });
       }
+      setSuccess(true);
     } catch (error) {
       console.error("유저를 찾는 중 에러:", error);
     }
   };
-
   return (
-    <div className={style.container}>
-      <h1 className={style.title}>Project</h1>
-      <h2 className={style.projectName}>{prj?.projectName}</h2>
+    <div className={styles.main}>
+      <div className={styles.container}>
+        <h2 className={styles.projectName}>
+          {prj.projectName
+            ? `${prj.projectName}에 함께 참여해보세요!`
+            : "프로젝트 정보를 불러오는 중..."}
+        </h2>
+        <h1 className={styles.title}>프로젝트 초대</h1>
 
-      <div className={style.inviteSection}>
-        <input
-          className={style.inviteInput}
-          placeholder="이메일 입력"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <button className={style.inviteButton} onClick={() => invite(name)}>
-          초대
-        </button>
-      </div>
+        <div className={styles.inviteSection}>
+          <input
+            className={styles.inviteInput}
+            placeholder="초대할 이메일 입력"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            aria-label="초대할 이메일 입력"
+            type="email"
+          />
+          <button
+            className={styles.inviteButton}
+            onClick={invite}
+            aria-label="초대하기"
+          >
+            초대
+          </button>
+        </div>
 
-      <div className={style.linkSection}>
-        <Link className={style.link} to={`/whiteboard/${prj.roomId}`}>
-          화이트 보드
-        </Link>
-        <Link className={style.link} to={`/schedule/${prj.scheduleId}`}>
-          일정관리
-        </Link>
+        {success && <p className={styles.success}>초대완료!</p>}
+
+        <div className={styles.linkSection}>
+          <Link className={styles.link} to={`/whiteboard/${prj.roomId}`}>
+            🧑‍🎨 화이트보드
+          </Link>
+          <Link className={styles.link} to={`/schedule/${prj.scheduleId}`}>
+            📅 일정관리
+          </Link>
+        </div>
       </div>
     </div>
   );
