@@ -1,15 +1,18 @@
+// AuthContext.tsx
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
+import { onAuthStateChanged, User, signOut } from "firebase/auth";
 import { auth } from "../firebase";
 
 interface AuthContextType {
   currentUser: User | null;
   loading: boolean;
+  logout: () => Promise<void>; // logout 함수 타입 추가
 }
 
 const AuthContext = createContext<AuthContextType>({
   currentUser: null,
   loading: true,
+  logout: async () => {}, // 기본값
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -25,8 +28,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return () => unsubscribe();
   }, []);
 
+  // 로그아웃 함수
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("로그아웃 실패:", error);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ currentUser, loading }}>
+    <AuthContext.Provider value={{ currentUser, loading, logout }}>
       {children}
     </AuthContext.Provider>
   );

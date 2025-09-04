@@ -1,16 +1,18 @@
-import Contact from "./contact";
-import style from "../style/Footer.module.css";
+import React from "react";
+import style from "../style/footer.module.css";
 
-function Footer() {
+const Footer: React.FC = () => {
   return (
-    <div className={style.footerContainer}>
-      <div className={style.footerWrapper}>
-        <div className={style.footerContent}>
-          <Contact />
-        </div>
-      </div>
-    </div>
+    <footer
+      className={style.footer}
+      style={{
+        backgroundImage: `url(${process.env.PUBLIC_URL}/image/footer-bg.png)`,
+      }}
+    >
+      {/* content 필요 없으면 빈 div만 남겨도 됨 */}
+      <div className={style.content}></div>
+    </footer>
   );
-}
+};
 
 export default Footer;

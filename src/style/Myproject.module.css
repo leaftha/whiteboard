@@ -1,77 +1,128 @@
 .main {
+  width: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.titleSection {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1800px;
+  margin: 0 auto 50px;
+  gap: 40px;
 }
 
-.titleContainer {
-  padding: 100px 0;
-  text-align: center;
-}
-.titleContainer h1 {
-  font-size: 60px;
+.titleText h1 {
+  font-size: 48px;
+  margin-bottom: 15px;
 }
 
-.titleContainer h1::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 4px;
-  background-color: #558bcf;
-  margin: 12px auto 0;
-  border-radius: 2px;
-  transition: 0.2s ease-in-out;
+.titleText p {
+  margin: 5px 0;
+  font-size: 18px;
+  color: #666;
 }
 
-.modalContainer {
+/* 버튼 3개 가로 정렬 */
+.titleButtons {
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
-  /* padding-top: 100px; */
-}
-.modalBtn {
-  background: none;
-  color: #111111;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-size: 40px;
-  cursor: pointer;
-  margin-right: 20px;
-}
-
-.modalBtn::after {
-  content: "";
-  display: block;
-  width: 0;
-  height: 4px;
-  background-color: #558bcf;
-  margin: 12px auto 0;
-  border-radius: 2px;
-  transition: 0.2s ease-in-out;
-}
-
-.modalBtn:hover::after {
-  width: 60px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  gap: 20px;
-  padding: 20px;
-}
-
-.gridItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 200px;
-  border: 1px solid #111111;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: 0.2s ease-in-out;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
-.gridItem:hover {
-  box-shadow: 0 0 0 5px #558bcf;
+.modalBtn {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  background-color: #558bcf;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.modalBtn:hover {
+  background-color: #4479bd;
+}
+
+.featureTitle {
+  font-size: 24px;
+  margin: 30px 0 15px;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+  color: #2c3e50;
+}
+
+.featureColumns {
+  display: flex;
+  gap: 20px;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.featureColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.featureItem {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background: #fdfdfd;
+  transition: 0.3s;
+}
+
+.featureItem:hover {
+  box-shadow: 0 6px 15px rgba(85, 139, 207, 0.2);
+  transform: translateY(-3px);
+}
+
+.featureItem h3 {
+  margin: 0 0 10px;
+}
+
+.featureItem p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .titleSection {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .titleButtons {
+    margin-top: 20px;
+  }
+  .featureColumns {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .featureItem {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .titleText h1 {
+    font-size: 32px;
+  }
+  .titleText p {
+    font-size: 16px;
+  }
+  .modalBtn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
 }

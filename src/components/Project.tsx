@@ -9,11 +9,11 @@ import {
   arrayUnion,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { db } from "../firebase";
-import { Link } from "react-router-dom";
+import style from "../style/Project.module.css";
 
-type Project = {
+type ProjectType = {
   id: string;
   roomId: string;
   scheduleId: string;
@@ -22,8 +22,9 @@ type Project = {
   maxMenber: number;
   startDate: Date;
 };
-const Project = () => {
-  const [prj, setPrj] = useState<Project>({
+
+const Project: React.FC = () => {
+  const [prj, setPrj] = useState<ProjectType>({
     id: "",
     roomId: "",
     scheduleId: "",
@@ -88,25 +89,29 @@ const Project = () => {
   };
 
   return (
-    <div>
-      <h1>Project</h1>
-      <h1>{prj?.projectName}</h1>
-      <div>
+    <div className={style.container}>
+      <h1 className={style.title}>Project</h1>
+      <h2 className={style.projectName}>{prj?.projectName}</h2>
+
+      <div className={style.inviteSection}>
         <input
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
+          className={style.inviteInput}
+          placeholder="이메일 입력"
+          onChange={(e) => setName(e.target.value)}
         />
-        <button
-          onClick={() => {
-            invite(name);
-          }}
-        >
+        <button className={style.inviteButton} onClick={() => invite(name)}>
           초대
         </button>
       </div>
-      <Link to={`/whiteboard/${prj.roomId}`}>화이트 보드</Link>
-      <Link to={`/schedule/${prj.scheduleId}`}>일정관리</Link>
+
+      <div className={style.linkSection}>
+        <Link className={style.link} to={`/whiteboard/${prj.roomId}`}>
+          화이트 보드
+        </Link>
+        <Link className={style.link} to={`/schedule/${prj.scheduleId}`}>
+          일정관리
+        </Link>
+      </div>
     </div>
   );
 };

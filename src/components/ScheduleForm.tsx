@@ -26,31 +26,33 @@ const ScheduleForm: React.FC<ScheduleFormProps> = ({ onAddTask }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={style.scheduleForm}>
-      <input
-        type="text"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="할 일을 입력하세요"
-        required
-      />
-      <input
-        type="date"
-        value={deadline}
-        onChange={(e) => setDeadline(e.target.value)}
-      />
-      <select
-        value={column}
-        onChange={(e) => setColumn(e.target.value as ColumnId)}
-      >
-        <option value="todo">예정</option>
-        <option value="inProgress">진행 중</option>
-        <option value="done">완료</option>
-      </select>
-      <button type="submit" className={style.addButton}>
-        추가
-      </button>
-    </form>
+    <div className={style.scheduleFormContainer}>
+      <form onSubmit={handleSubmit} className={style.scheduleForm}>
+        <input
+          type="text"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="할 일을 입력하세요"
+          required
+        />
+        <input
+          type="date"
+          value={deadline}
+          onChange={(e) => setDeadline(e.target.value)}
+        />
+        <select
+          value={column}
+          onChange={(e) => setColumn(e.target.value as ColumnId)}
+        >
+          <option value="todo">예정</option>
+          <option value="inProgress">진행 중</option>
+          <option value="done">완료</option>
+        </select>
+        <button type="submit" className={style.addButton}>
+          추가
+        </button>
+      </form>
+    </div>
   );
 };
 
