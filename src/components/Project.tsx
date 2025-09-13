@@ -23,7 +23,7 @@ type Project = {
 };
 
 const Project: React.FC = () => {
-  const [prj, setPrj] = useState<ProjectType>({
+  const [prj, setPrj] = useState<Project>({
     id: "",
     roomId: "",
     scheduleId: "",

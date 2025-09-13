@@ -84,7 +84,7 @@ const MyProject: React.FC = () => {
             <button
               className={style.modalBtn}
               onClick={() => {
-                setIsMadal(!isModal);
+                setIsModal(!isModal);
               }}
             >
               추가
@@ -117,7 +117,7 @@ const MyProject: React.FC = () => {
           </div>
 
           {isModal && (
-            <AddProject setProjects={setProjects} setIsMadal={setIsMadal} />
+            <AddProject setProjects={setProjects} setIsModal={setIsModal} />
           )}
         </div>
       ) : (
