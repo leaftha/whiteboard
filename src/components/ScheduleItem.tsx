@@ -58,24 +58,26 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({
             className={style.editInput}
             autoFocus
           />
-          <button
-            className={`${style.iconSmallButton} ${style.save}`}
-            onClick={handleSave}
-            aria-label="저장"
-            title="저장"
-            type="button"
-          >
-            💾
-          </button>
-          <button
-            className={`${style.iconSmallButton} ${style.cancel}`}
-            onClick={() => setIsEditing(false)}
-            aria-label="취소"
-            title="취소"
-            type="button"
-          >
-            ❌
-          </button>
+          <div className={style.taskActionsBottom}>
+            <button
+              className={`${style.iconSmallButton} ${style.save}`}
+              onClick={handleSave}
+              aria-label="저장"
+              title="저장"
+              type="button"
+            >
+              💾
+            </button>
+            <button
+              className={`${style.iconSmallButton} ${style.cancel}`}
+              onClick={() => setIsEditing(false)}
+              aria-label="취소"
+              title="취소"
+              type="button"
+            >
+              ❌
+            </button>
+          </div>
         </div>
       ) : (
         <>
@@ -91,7 +93,8 @@ const ScheduleItem: React.FC<ScheduleItemProps> = ({
             )}
           </div>
 
-          <div className={style.taskActions}>
+          {/* 버튼을 글씨/마감일 아래 하단으로 이동 */}
+          <div className={style.taskActionsBottom}>
             <button
               className={`${style.iconButton} ${style.editButton}`}
               onClick={(e) => {

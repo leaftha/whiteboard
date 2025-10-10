@@ -19,6 +19,18 @@ interface MiniCalendarProps {
 const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
+  const handlePrevMonth = () => {
+    const newMonth = subMonths(currentMonth, 1);
+    console.log("이전 달로 이동:", format(newMonth, "yyyy년 M월"));
+    setCurrentMonth(newMonth);
+  };
+
+  const handleNextMonth = () => {
+    const newMonth = addMonths(currentMonth, 1);
+    console.log("다음 달로 이동:", format(newMonth, "yyyy년 M월"));
+    setCurrentMonth(newMonth);
+  };
+
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart, { weekStartsOn: 0 });
@@ -47,13 +59,16 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
   return (
     <div
       style={{
-        fontFamily: "Pretendard, -apple-system, BlinkMacSystemFont, sans-serif",
-        backgroundColor: "#ffffff",
-        borderRadius: "16px",
+        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+        backgroundColor: "rgba(255, 255, 255, 0.85)",
+        backdropFilter: "blur(12px)",
+        borderRadius: "20px",
         padding: "24px",
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
-        border: "1px solid #e5e7eb",
+        boxShadow:
+          "0 4px 20px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04)",
+        border: "1px solid #e2e8f0",
         maxWidth: "380px",
+        transition: "all 0.3s ease",
       }}
     >
       {/* 헤더 */}
@@ -67,32 +82,32 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
         }}
       >
         <button
-          onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
+          onClick={handlePrevMonth}
           style={{
-            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
             border: "none",
             borderRadius: "12px",
             width: "40px",
             height: "40px",
             color: "white",
-            fontSize: "18px",
+            fontSize: "16px",
             fontWeight: "600",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            transition: "all 0.3s ease",
-            boxShadow: "0 2px 8px rgba(102, 126, 234, 0.3)",
+            transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
+            boxShadow: "0 2px 8px rgba(59, 130, 246, 0.3)",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.transform = "scale(1.1)";
+            e.currentTarget.style.transform = "translateY(-2px) scale(1.05)";
             e.currentTarget.style.boxShadow =
-              "0 4px 12px rgba(102, 126, 234, 0.4)";
+              "0 4px 12px rgba(59, 130, 246, 0.4)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.transform = "translateY(0) scale(1)";
             e.currentTarget.style.boxShadow =
-              "0 2px 8px rgba(102, 126, 234, 0.3)";
+              "0 2px 8px rgba(59, 130, 246, 0.3)";
           }}
         >
           ◀
@@ -101,44 +116,46 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
         <div
           style={{
             fontSize: "20px",
-            fontWeight: "700",
+            fontWeight: "800",
             color: "#1f2937",
-            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             letterSpacing: "-0.5px",
+            minWidth: "150px",
+            textAlign: "center",
           }}
         >
           {format(currentMonth, "yyyy년 M월")}
         </div>
 
         <button
-          onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+          onClick={handleNextMonth}
           style={{
-            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
             border: "none",
-            borderRadius: "8px",
-            width: "32px",
-            height: "32px",
+            borderRadius: "12px",
+            width: "40px",
+            height: "40px",
             color: "white",
-            fontSize: "14px",
+            fontSize: "16px",
             fontWeight: "600",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            transition: "all 0.3s ease",
-            boxShadow: "0 2px 8px rgba(102, 126, 234, 0.3)",
+            transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
+            boxShadow: "0 2px 8px rgba(59, 130, 246, 0.3)",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.transform = "scale(1.1)";
+            e.currentTarget.style.transform = "translateY(-2px) scale(1.05)";
             e.currentTarget.style.boxShadow =
-              "0 4px 12px rgba(102, 126, 234, 0.4)";
+              "0 4px 12px rgba(59, 130, 246, 0.4)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.transform = "translateY(0) scale(1)";
             e.currentTarget.style.boxShadow =
-              "0 2px 8px rgba(102, 126, 234, 0.3)";
+              "0 2px 8px rgba(59, 130, 246, 0.3)";
           }}
         >
           ▶
@@ -184,7 +201,7 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
             gridTemplateColumns: "repeat(7, 1fr)",
             gap: "4px",
             marginBottom: "4px",
-            fontFamily: "Roboto, sans-serif",
+            fontFamily: "'JetBrains Mono', monospace",
           }}
         >
           {week.map((day, dayIndex) => {
@@ -206,9 +223,9 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
                   fontSize: "14px",
                   fontWeight: isToday ? "700" : "500",
                   cursor: "pointer",
-                  transition: "all 0.3s ease",
+                  transition: "all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
                   backgroundColor: isToday
-                    ? "#667eea"
+                    ? "#3b82f6"
                     : isCurrentMonth
                     ? "#ffffff"
                     : "#f8fafc",
@@ -222,22 +239,22 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
                       : "#374151"
                     : "#9ca3af",
                   border: isToday
-                    ? "2px solid #667eea"
+                    ? "2px solid #3b82f6"
                     : hasTask && isCurrentMonth
                     ? "2px solid #10b981"
                     : "1px solid #f1f5f9",
                   boxShadow: isToday
-                    ? "0 4px 12px rgba(102, 126, 234, 0.3)"
+                    ? "0 4px 12px rgba(59, 130, 246, 0.3)"
                     : hasTask && isCurrentMonth
                     ? "0 2px 8px rgba(16, 185, 129, 0.2)"
                     : "none",
                 }}
                 onMouseEnter={(e) => {
                   if (isCurrentMonth && !isToday) {
-                    e.currentTarget.style.backgroundColor = "#f3f4f6";
-                    e.currentTarget.style.transform = "scale(1.05)";
+                    e.currentTarget.style.backgroundColor = "#eff6ff";
+                    e.currentTarget.style.transform = "scale(1.08)";
                     e.currentTarget.style.boxShadow =
-                      "0 2px 8px rgba(0, 0, 0, 0.1)";
+                      "0 2px 8px rgba(59, 130, 246, 0.15)";
                   }
                 }}
                 onMouseLeave={(e) => {
@@ -262,6 +279,7 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
                       backgroundColor: isToday ? "#ffffff" : "#10b981",
                       borderRadius: "50%",
                       boxShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
+                      animation: "pulse 2s infinite",
                     }}
                   />
                 )}
@@ -289,7 +307,8 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "8px",
+            gap: "12px",
+            fontWeight: "500",
           }}
         >
           <div
@@ -305,6 +324,7 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
                 height: "8px",
                 backgroundColor: "#10b981",
                 borderRadius: "50%",
+                boxShadow: "0 0 8px rgba(16, 185, 129, 0.4)",
               }}
             />
             <span>할 일 있음</span>
@@ -320,14 +340,30 @@ const MiniCalendar: React.FC<MiniCalendarProps> = ({ tasks = [] }) => {
               style={{
                 width: "8px",
                 height: "8px",
-                backgroundColor: "#667eea",
+                backgroundColor: "#3b82f6",
                 borderRadius: "50%",
+                boxShadow: "0 0 8px rgba(59, 130, 246, 0.4)",
               }}
             />
             <span>오늘</span>
           </div>
         </div>
       </div>
+
+      <style>
+        {`
+          @keyframes pulse {
+            0%, 100% {
+              opacity: 1;
+              transform: scale(1);
+            }
+            50% {
+              opacity: 0.7;
+              transform: scale(1.2);
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };

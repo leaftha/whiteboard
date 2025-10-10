@@ -107,10 +107,12 @@
 }
 
 .scheduleColumn h2 {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   color: #111827;
   margin-bottom: 20px;
+  text-align: center;
+  font-family: "Inter", sans-serif;
 }
 
 /* 카드형 투두리스트 아이템 */

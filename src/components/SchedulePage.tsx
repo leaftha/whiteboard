@@ -19,6 +19,7 @@ import {
 import ScheduleList from "./ScheduleList";
 import ScheduleForm from "./ScheduleForm";
 import ScheduleItem from "./ScheduleItem";
+
 import {
   startOfMonth,
   endOfMonth,
@@ -68,7 +69,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
     useSensor(KeyboardSensor)
   );
 
-  // 캘린더 관련 로직
+  // 📅 캘린더 관련 로직
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
   const startDate = startOfWeek(monthStart, { weekStartsOn: 0 });
@@ -86,6 +87,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
     weeks.push(days.slice(i, i + 7));
   }
 
+  // 📆 날짜별 할 일 필터링
   const allTasks = [...tasks.todo, ...tasks.inProgress, ...tasks.done];
   const tasksByDate = (date: Date) =>
     allTasks.filter(
@@ -95,6 +97,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
           format(date, "yyyy-MM-dd")
     );
 
+  // ✋ Drag state 초기화
   const clearDragState = (taskId?: string) => {
     if (!taskId || taskId === activeId) {
       setActiveId(null);
@@ -102,6 +105,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
     }
   };
 
+  // ➕ 작업 추가
   const handleAddTask = (
     content: string,
     column: ColumnId,
@@ -118,6 +122,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
     }));
   };
 
+  // 🗑️ 작업 삭제
   const handleDeleteTask = (column: ColumnId, taskId: string) => {
     setTasks((prev) => ({
       ...prev,
@@ -126,6 +131,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
     clearDragState(taskId);
   };
 
+  // ✏️ 작업 수정
   const handleEditTask = (
     column: ColumnId,
     taskId: string,
@@ -140,6 +146,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
     clearDragState(taskId);
   };
 
+  // 🎯 드래그 시작
   const handleDragStart = (event: DragStartEvent) => {
     const id = event.active.id as string;
     setActiveId(id);
@@ -152,12 +159,14 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
     }
   };
 
+  // 🏁 드래그 종료
   const handleDragEnd = (event: DragEndEvent) => {
     const { over } = event;
     if (!over || !activeId || !activeColumn) return;
 
     const overId = over.id as string;
 
+    // 다른 컬럼으로 이동
     if (["todo", "inProgress", "done"].includes(overId)) {
       const destColumn = overId as ColumnId;
       if (destColumn === activeColumn) {
@@ -177,6 +186,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
         [destColumn]: [movedTask, ...prev[destColumn]],
       }));
     } else {
+      // 같은 컬럼 내 순서 변경
       const sourceTasks = [...tasks[activeColumn]];
       const oldIndex = sourceTasks.findIndex((task) => task.id === activeId);
       const newIndex = sourceTasks.findIndex((task) => task.id === overId);
@@ -220,7 +230,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
           height: "calc(100vh - 80px)",
         }}
       >
-        {/* 왼쪽 캘린더 섹션 */}
+        {/* 📅 왼쪽 캘린더 섹션 */}
         <div
           style={{
             flex: "0 0 400px",
@@ -252,18 +262,6 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
                 color: "#6b7280",
                 fontSize: "18px",
                 cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "all 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#f3f4f6";
-                e.currentTarget.style.color = "#374151";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.color = "#6b7280";
               }}
             >
               ◀
@@ -279,7 +277,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
                 textAlign: "center",
               }}
             >
-              {format(currentMonth, "MMM' yyyy")}
+              {format(currentMonth, "yyyy년 M월")}
             </h2>
 
             <button
@@ -293,18 +291,6 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
                 color: "#6b7280",
                 fontSize: "18px",
                 cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                transition: "all 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#f3f4f6";
-                e.currentTarget.style.color = "#374151";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.color = "#6b7280";
               }}
             >
               ▶
@@ -348,7 +334,6 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
                 gridTemplateColumns: "repeat(7, 1fr)",
                 gap: "1px",
                 marginBottom: "1px",
-                fontFamily: "Pretendard, sans-serif",
               }}
             >
               {week.map((day, dayIndex) => {
@@ -375,17 +360,6 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
                         : "#d1d5db",
                       backgroundColor: isToday ? "#60a5fa" : "transparent",
                       borderRadius: "8px",
-                      transition: "all 0.2s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isToday && isCurrentMonth) {
-                        e.currentTarget.style.backgroundColor = "#f3f4f6";
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isToday) {
-                        e.currentTarget.style.backgroundColor = "transparent";
-                      }
                     }}
                   >
                     {format(day, "dd")}
@@ -410,7 +384,7 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
           ))}
         </div>
 
-        {/* 오른쪽 투두리스트 섹션 */}
+        {/* 🧾 오른쪽 투두리스트 섹션 */}
         <div
           style={{
             flex: 1,
@@ -422,11 +396,10 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
             flexDirection: "column",
           }}
         >
+          {/* 타이틀 중앙 + 날짜 오른쪽 */}
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+              position: "relative",
               marginBottom: "40px",
             }}
           >
@@ -436,12 +409,17 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
                 fontWeight: "700",
                 color: "#111827",
                 margin: 0,
+                textAlign: "center",
               }}
             >
               할 일 관리
             </h1>
             <div
               style={{
+                position: "absolute",
+                right: 0,
+                top: "50%",
+                transform: "translateY(-50%)",
                 fontSize: "16px",
                 color: "#6b7280",
                 fontWeight: "500",
