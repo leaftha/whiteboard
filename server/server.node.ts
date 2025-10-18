@@ -9,8 +9,8 @@ import { loadAsset, storeAsset } from "./assets";
 import { unfurl } from "./unfurl";
 
 const SERVER_PORT = process.env.SERVER_PORT || 6080;
-const LIVEKIT_API_KEY = process.env.LIVEKIT_API_KEY || "devkey";
-const LIVEKIT_API_SECRET = process.env.LIVEKIT_API_SECRET || "secret";
+const LIVEKIT_API_KEY = "APIbAed6giLBUBq";
+const LIVEKIT_API_SECRET = "3nN6iymQLj9GJD8L8EH2gp0UsMhvX3Fh47lRa03t23Dg";
 
 const app = fastify();
 

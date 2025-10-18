@@ -12,7 +12,7 @@ import "tldraw/tldraw.css";
 import VideoCall from "./VideoCall";
 import { useEffect, useState } from "react";
 
-const WORKER_URL = `http://localhost:6080`;
+const WORKER_URL = process.env.REACT_APP_SERVER_URL;
 
 function WhiteBoard() {
   const { roomId } = useParams();
@@ -52,7 +52,7 @@ function WhiteBoard() {
           editor.registerExternalAssetHandler("url", unfurlBookmarkUrl);
         }}
       />
-      {/* <VideoCall roomId={roomId as string} /> */}
+      <VideoCall roomId={roomId as string} />
     </div>
   );
 }

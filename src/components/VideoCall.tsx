@@ -18,8 +18,8 @@ type TrackInfo = {
 
 // When running OpenVidu locally, leave these variables empty
 // For other deployment type, configure them with correct URLs depending on your deployment
-let APPLICATION_SERVER_URL = "";
-let LIVEKIT_URL = "";
+let APPLICATION_SERVER_URL = process.env.REACT_APP_SERVER_URL;
+let LIVEKIT_URL = process.env.REACT_APP_LIVEKIT_URL ?? "";
 configureUrls();
 
 function configureUrls() {
@@ -139,7 +139,7 @@ function VideoCall({ roomId }: { roomId: string }) {
    * access to the endpoints.
    */
   async function getToken(roomName: string, participantName: string) {
-    const response = await fetch(APPLICATION_SERVER_URL + "token", {
+    const response = await fetch(APPLICATION_SERVER_URL + "/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
