@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -33,6 +33,11 @@ import {
   subMonths,
 } from "date-fns";
 
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import { useParams } from "react-router-dom";
+import Loading from "./loading";
+
 export type ColumnId = "todo" | "inProgress" | "done";
 
 interface Task {
@@ -46,12 +51,9 @@ type TasksByColumn = {
 };
 
 const initialTasks: TasksByColumn = {
-  todo: [
-    { id: "1", content: "UI 디자인 개선", deadline: "2024-09-10" },
-    { id: "2", content: "Firebase 연동 테스트" },
-  ],
-  inProgress: [{ id: "3", content: "캘린더 레이아웃 수정" }],
-  done: [{ id: "4", content: "드래그 기능 구현 완료", deadline: "2024-09-04" }],
+  todo: [],
+  inProgress: [],
+  done: [],
 };
 
 interface SchedulePageProps {
@@ -63,12 +65,63 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [activeColumn, setActiveColumn] = useState<ColumnId | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  let { id } = useParams();
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor)
   );
 
+  useEffect(() => {
+    const fetchTasks = async () => {
+      if (!id) return;
+
+      try {
+        const docRef = doc(db, "schedules", id);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setTasks({
+            todo: data.todo ?? [],
+            inProgress: data.inProgress ?? [],
+            done: data.done ?? [],
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      } finally {
+        setIsLoaded(true);
+      }
+    };
+
+    fetchTasks();
+  }, [id]);
+
+  useEffect(() => {
+    const saveTasks = async () => {
+      if (!id || !isLoaded) return;
+
+      try {
+        const docRef = doc(db, "schedules", id);
+        await setDoc(
+          docRef,
+          {
+            todo: [...tasks.todo],
+            inProgress: [...tasks.inProgress],
+            done: [...tasks.done],
+          },
+          { merge: true }
+        );
+      } catch (error) {
+        console.error("Error saving tasks:", error);
+      }
+    };
+
+    saveTasks();
+  }, [tasks, id, isLoaded]);
   // 📅 캘린더 관련 로직
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(monthStart);
@@ -439,44 +492,48 @@ const SchedulePage: React.FC<SchedulePageProps> = ({ projectId }) => {
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
           >
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "24px",
-                flex: 1,
-              }}
-            >
-              {(["todo", "inProgress", "done"] as const).map((columnId) => (
-                <div
-                  key={columnId}
-                  style={{ display: "flex", flexDirection: "column" }}
-                >
-                  <SortableContext
-                    items={tasks[columnId].map((task) => task.id)}
-                    strategy={verticalListSortingStrategy}
+            {isLoaded === false ? (
+              <Loading />
+            ) : (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gap: "24px",
+                  flex: 1,
+                }}
+              >
+                {(["todo", "inProgress", "done"] as const).map((columnId) => (
+                  <div
+                    key={columnId}
+                    style={{ display: "flex", flexDirection: "column" }}
                   >
-                    <ScheduleList
-                      columnId={columnId}
-                      title={
-                        columnId === "todo"
-                          ? "할 일"
-                          : columnId === "inProgress"
-                          ? "진행 중"
-                          : "완료"
-                      }
-                      tasks={tasks[columnId]}
-                      onDeleteTask={(taskId) =>
-                        handleDeleteTask(columnId, taskId)
-                      }
-                      onEditTask={(taskId, newContent) =>
-                        handleEditTask(columnId, taskId, newContent)
-                      }
-                    />
-                  </SortableContext>
-                </div>
-              ))}
-            </div>
+                    <SortableContext
+                      items={tasks[columnId].map((task) => task.id)}
+                      strategy={verticalListSortingStrategy}
+                    >
+                      <ScheduleList
+                        columnId={columnId}
+                        title={
+                          columnId === "todo"
+                            ? "할 일"
+                            : columnId === "inProgress"
+                            ? "진행 중"
+                            : "완료"
+                        }
+                        tasks={tasks[columnId]}
+                        onDeleteTask={(taskId) =>
+                          handleDeleteTask(columnId, taskId)
+                        }
+                        onEditTask={(taskId, newContent) =>
+                          handleEditTask(columnId, taskId, newContent)
+                        }
+                      />
+                    </SortableContext>
+                  </div>
+                ))}
+              </div>
+            )}
 
             <DragOverlay>
               {activeTask && (
