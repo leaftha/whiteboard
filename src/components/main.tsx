@@ -122,16 +122,16 @@ const Main = () => {
           <article className={style.descriptionGridItem}>
             <img
               className={style.descriptionImg}
-              src="image/main1.jpg"
+              src="image/descriptionImg5.gif"
               alt="main img"
             />
             <div className={style.description}>
-              <h1>title</h1>
+              <h1>화상통화 기능</h1>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim,
-                illum explicabo odio aliquam consequatur, doloremque, vitae quas
-                est voluptates dignissimos quaerat ut commodi in. Architecto
-                atque quam quo molestiae provident?
+                실시간 화상통화를 통해 얼굴을 보며 음성으로 회의할 수 있습니다.{" "}
+                <br />
+                화이트보드 기능과 함께 사용하면 더욱 정확하고 효율적인 협업이
+                가능합니다.
               </p>
             </div>
           </article>
