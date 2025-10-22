@@ -7,85 +7,108 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { v4 as uuid } from "uuid";
-import { useState } from "react";
+import { SetStateAction, Dispatch, useState, FormEvent } from "react";
 import { useAuth } from "../context/AuthContext";
+import style from "../style/Addproject.module.css";
 
-type AddProjectProps = {
-  setProjects: React.Dispatch<React.SetStateAction<any[]>>; // Project 타입을 맞추려면 Project[]로 수정 가능
+interface AddProjectProps {
+  setProjects: React.Dispatch<React.SetStateAction<Project[]>>;
   setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+type Project = {
+  id: string;
+  roomId: string;
+  scheduleId: string;
+  projectName: string;
+  users: string[];
+  maxMenber: number;
+  startDate: Date;
 };
 
-const AddProject: React.FC<AddProjectProps> = ({ setProjects, setIsModal }) => {
+const AddProject = ({ setIsModal, setProjects }: AddProjectProps) => {
   const [title, setTitle] = useState<string>("");
+  const [menber, setMenber] = useState<number>(1);
   const { currentUser } = useAuth();
 
-  const newProject = async () => {
-    if (!title.trim() || !currentUser) return;
-
+  const newProject = async (e: FormEvent) => {
+    e.preventDefault();
+    if (title === "") {
+      alert("제목을 입력하세요");
+      return;
+    }
     const id = uuid();
+    const currentDay = new Date();
     try {
-      // 프로젝트 컬렉션에 새 프로젝트 추가
+      const docschedulesRef = await addDoc(collection(db, "schedules"), {
+        done: [],
+        inProgress: [],
+        todo: [],
+      });
       const docRef = await addDoc(collection(db, "project"), {
         projectName: title,
         roomId: id,
-        users: arrayUnion(currentUser.uid),
+        users: arrayUnion(currentUser?.uid),
+        maxMenber: menber,
+        startDate: currentDay,
+        scheduleId: docschedulesRef.id,
       });
 
-      // 사용자 문서에 프로젝트 ID 추가
-      const userRef = doc(db, "users", currentUser.uid);
-      await updateDoc(userRef, {
-        projects: arrayUnion(docRef.id),
-      });
+      if (currentUser?.uid) {
+        const userRef = doc(db, "users", currentUser.uid);
+        await updateDoc(userRef, {
+          projects: arrayUnion(docRef.id),
+        });
+      }
+      const newProject = {
+        id: docRef.id,
+        roomId: id,
+        projectName: title,
+        users: currentUser?.uid ? [currentUser.uid] : [],
+        maxMenber: menber,
+        startDate: currentDay,
+        scheduleId: docschedulesRef.id,
+      };
 
-      // MyProject 컴포넌트 상태에 새 프로젝트 반영
-      setProjects((prev) => [
-        ...prev,
-        {
-          id: docRef.id,
-          projectName: title,
-          roomId: id,
-          scheduleId: "",
-          users: [currentUser.uid],
-          maxMenber: 1,
-          startDate: new Date(),
-        },
-      ]);
-
-      setTitle(""); // 입력 초기화
-      setIsModal(false); // 모달 닫기
+      setProjects((prev) => [...prev, newProject]);
+      setIsModal(false);
     } catch (e) {
-      console.error("프로젝트 생성 중 에러:", e);
+      console.error("Error adding document: ", e);
     }
   };
-
   return (
-    <div
-      style={{ padding: "20px", background: "#f9f9f9", borderRadius: "10px" }}
-    >
-      <h2>프로젝트 생성</h2>
-      <input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="프로젝트 제목"
-        style={{
-          padding: "8px",
-          marginRight: "10px",
-          borderRadius: "6px",
-          border: "1px solid #ccc",
-        }}
-      />
-      <button
-        onClick={newProject}
-        style={{
-          padding: "8px 15px",
-          borderRadius: "6px",
-          background: "#558bcf",
-          color: "white",
-          border: "none",
-        }}
+    <div className={style.main} onClick={() => setIsModal(false)}>
+      <form
+        className={style.formContainer}
+        onSubmit={(e) => newProject(e)}
+        onClick={(e) => e.stopPropagation()}
       >
-        새 프로젝트 생성
-      </button>
+        <div className={style.formContent}>
+          <div className={style.inpuBox}>
+            <label>프로젝트 제목</label>
+            <input
+              placeholder="프로젝트 제목을 입력하세요"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div className={style.inpuBox}>
+            <label>인원 수</label>
+            <input
+              type="number"
+              value={menber}
+              min={1}
+              max={4}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setMenber(Number(e.target.value))
+              }
+            />
+          </div>
+        </div>
+        <div className={style.buttonBox}>
+          <button>새 프로젝트 생성</button>
+        </div>
+      </form>
     </div>
   );
 };
